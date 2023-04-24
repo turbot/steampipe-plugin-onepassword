@@ -23,37 +23,48 @@ func tableOnepasswordVault(ctx context.Context) *plugin.Table {
 			{
 				Name:        "id",
 				Type:        proto.ColumnType_STRING,
-				Description: "The ID of the ACL.",
+				Description: "The ID of this vault.",
 			},
 			{
 				Name:        "name",
 				Type:        proto.ColumnType_STRING,
-				Description: "The name of the ACL.",
+				Description: "The name of this vault.",
 			},
 			{
-				Name:        "service_id",
-				Type:        proto.ColumnType_STRING,
-				Description: "Alphanumeric string identifying the service.",
-			},
-			{
-				Name:        "service_version",
+				Name:        "attr_version",
 				Type:        proto.ColumnType_INT,
-				Description: "Integer identifying a service version.",
+				Description: "The vault version.",
 			},
 			{
 				Name:        "created_at",
 				Type:        proto.ColumnType_TIMESTAMP,
-				Description: "Timestamp (UTC) of when the ACL was created.",
+				Description: "Timestamp of when the vault was created.",
 			},
 			{
-				Name:        "deleted_at",
-				Type:        proto.ColumnType_TIMESTAMP,
-				Description: "Timestamp (UTC) of when the ACL was deleted.",
+				Name:        "content_version",
+				Type:        proto.ColumnType_INT,
+				Description: "The version of the vault contents.",
+				Transform:   transform.FromField("ContentVersoin"),
+			},
+			{
+				Name:        "description",
+				Type:        proto.ColumnType_STRING,
+				Description: "The description of this vault.",
+			},
+			{
+				Name:        "items",
+				Type:        proto.ColumnType_INT,
+				Description: "Number of active items in the vault.",
+			},
+			{
+				Name:        "type",
+				Type:        proto.ColumnType_STRING,
+				Description: "The type of this vault.",
 			},
 			{
 				Name:        "updated_at",
 				Type:        proto.ColumnType_TIMESTAMP,
-				Description: "Timestamp (UTC) of when the ACL was updated.",
+				Description: "Timestamp of when the vault was updated.",
 			},
 
 			/// Steampipe standard columns
