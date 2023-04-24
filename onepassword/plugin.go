@@ -20,6 +20,7 @@ func Plugin(ctx context.Context) *plugin.Plugin {
 		// },
 		TableMap: map[string]*plugin.Table{
 			"onepassword_vault": tableOnepasswordVault(ctx),
+			"onepassword_item":  tableOnepasswordItem(ctx),
 		},
 	}
 	return p
