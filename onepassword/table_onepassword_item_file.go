@@ -110,8 +110,8 @@ func listItemFiles(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateDa
 	vault := h.Item.(onepassword.Vault)
 	vault_id := d.EqualsQuals["vault_id"].GetStringValue()
 
-	// check if the provided vault_id is not matching with the parentHydrate
-	if vault_id != "" && vault_id != vault.Name {
+	// check if the item_id is empty or the provided vault_id is not matching with the parentHydrate
+	if item_id == "" || (vault_id != "" && vault_id != vault.Name) {
 		return nil, nil
 	}
 
