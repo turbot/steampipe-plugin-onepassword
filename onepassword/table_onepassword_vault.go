@@ -15,10 +15,10 @@ func tableOnepasswordVault(ctx context.Context) *plugin.Table {
 		List: &plugin.ListConfig{
 			Hydrate: listVaults,
 		},
-		// Get: &plugin.GetConfig{
-		// 	Hydrate:    getVault,
-		// 	KeyColumns: plugin.SingleColumn("name"),
-		// },
+		Get: &plugin.GetConfig{
+			Hydrate:    getVault,
+			KeyColumns: plugin.SingleColumn("id"),
+		},
 		Columns: []*plugin.Column{
 			{
 				Name:        "id",
@@ -101,4 +101,27 @@ func listVaults(ctx context.Context, d *plugin.QueryData, _ *plugin.HydrateData)
 	}
 
 	return nil, nil
+}
+
+func getVault(ctx context.Context, d *plugin.QueryData, _ *plugin.HydrateData) (interface{}, error) {
+	id := d.EqualsQuals["id"].GetStringValue()
+
+	// Check if id is empty
+	if id == "" {
+		return nil, nil
+	}
+
+	client, err := getClient(ctx, d)
+	if err != nil {
+		plugin.Logger(ctx).Error("onepassword_vault.getVault", "connection_error", err)
+		return nil, err
+	}
+
+	vault, err := client.GetVault(id)
+	if err != nil {
+		plugin.Logger(ctx).Error("onepassword_vault.getVault", "api_error", err)
+		return nil, err
+	}
+
+	return vault, nil
 }
