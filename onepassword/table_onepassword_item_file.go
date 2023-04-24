@@ -111,7 +111,7 @@ func listItemFiles(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateDa
 	vault_id := d.EqualsQuals["vault_id"].GetStringValue()
 
 	// check if the item_id is empty or the provided vault_id is not matching with the parentHydrate
-	if item_id == "" || (vault_id != "" && vault_id != vault.Name) {
+	if item_id == "" || (vault_id != "" && vault_id != vault.ID) {
 		return nil, nil
 	}
 

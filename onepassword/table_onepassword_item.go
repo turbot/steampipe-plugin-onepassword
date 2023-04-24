@@ -97,7 +97,7 @@ func listItems(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) 
 	vault_id := d.EqualsQuals["vault_id"].GetStringValue()
 
 	// check if the provided vault_id is not matching with the parentHydrate
-	if vault_id != "" && vault_id != vault.Name {
+	if vault_id != "" && vault_id != vault.ID {
 		return nil, nil
 	}
 
