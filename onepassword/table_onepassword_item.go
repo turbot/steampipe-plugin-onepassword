@@ -12,13 +12,13 @@ import (
 func tableOnepasswordItem(ctx context.Context) *plugin.Table {
 	return &plugin.Table{
 		Name:        "onepassword_item",
-		Description: "Retrieve information about Onepassword Item.",
+		Description: "Retrieve information about your items.",
 		List: &plugin.ListConfig{
 			ParentHydrate: listVaults,
 			Hydrate:       listItems,
 			KeyColumns: []*plugin.KeyColumn{
 				{
-					Name:    "id",
+					Name:    "vault_id",
 					Require: plugin.Optional,
 				},
 			},
@@ -66,11 +66,6 @@ func tableOnepasswordItem(ctx context.Context) *plugin.Table {
 				Description: "The category of the item.",
 			},
 			{
-				Name:        "fields",
-				Type:        proto.ColumnType_JSON,
-				Description: "The category of the item.",
-			},
-			{
 				Name:        "files",
 				Type:        proto.ColumnType_JSON,
 				Description: "The category of the item.",
@@ -97,12 +92,12 @@ func tableOnepasswordItem(ctx context.Context) *plugin.Table {
 
 func listItems(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (interface{}, error) {
 	vault := h.Item.(onepassword.Vault)
-	// project_name := d.EqualsQuals["project_name"].GetStringValue()
+	vault_id := d.EqualsQuals["vault_id"].GetStringValue()
 
-	// // check if the provided project_name is not matching with the parentHydrate
-	// if project_name != "" && project_name != project.Name {
-	// 	return nil, nil
-	// }
+	// check if the provided vault_id is not matching with the parentHydrate
+	if vault_id != "" && vault_id != vault.Name {
+		return nil, nil
+	}
 
 	client, err := getClient(ctx, d)
 	if err != nil {
@@ -131,8 +126,6 @@ func listItems(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) 
 func getItem(ctx context.Context, d *plugin.QueryData, _ *plugin.HydrateData) (interface{}, error) {
 	id := d.EqualsQuals["id"].GetStringValue()
 	vault_id := d.EqualsQuals["vault_id"].GetStringValue()
-	// Error: Please provide either the vault name or its ID. (SQLSTATE HV000)
-	// Should allow vault name also.!!!!!!! TODO
 
 	// Check if id is empty
 	if id == "" || vault_id == "" {
