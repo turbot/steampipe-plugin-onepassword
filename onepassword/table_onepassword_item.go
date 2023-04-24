@@ -59,11 +59,19 @@ func tableOnepasswordItem(ctx context.Context) *plugin.Table {
 				Name:        "sections",
 				Type:        proto.ColumnType_JSON,
 				Description: "The category of the item.",
+				Hydrate:     getItem,
+			},
+			{
+				Name:        "fields",
+				Type:        proto.ColumnType_JSON,
+				Description: "The category of the item.",
+				Hydrate:     getItem,
 			},
 			{
 				Name:        "files",
 				Type:        proto.ColumnType_JSON,
 				Description: "The category of the item.",
+				Hydrate:     getItem,
 			},
 
 			{
@@ -80,6 +88,17 @@ func tableOnepasswordItem(ctx context.Context) *plugin.Table {
 				Name:        "updated_at",
 				Type:        proto.ColumnType_TIMESTAMP,
 				Description: "Item updated at.",
+			},
+			{
+				Name:        "tags",
+				Type:        proto.ColumnType_JSON,
+				Description: "Item Tags.",
+			},
+			{
+				Name:        "urls",
+				Type:        proto.ColumnType_JSON,
+				Description: "Item URLs.",
+				Transform:   transform.FromField("URLs"),
 			},
 
 			/// Steampipe standard columns

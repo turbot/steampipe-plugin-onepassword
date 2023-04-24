@@ -3,9 +3,13 @@ module github.com/turbot/steampipe-plugin-1password
 go 1.19
 
 require (
+	github.com/1Password/connect-sdk-go v1.5.0
+	github.com/turbot/steampipe-plugin-sdk/v5 v5.3.0
+)
+
+require (
 	cloud.google.com/go v0.65.0 // indirect
 	cloud.google.com/go/storage v1.10.0 // indirect
-	github.com/1Password/connect-sdk-go v1.5.0 // indirect
 	github.com/XiaoMi/pegasus-go-client v0.0.0-20210427083443-f3b6b08bc4c2 // indirect
 	github.com/acarl005/stripansi v0.0.0-20180116102854-5a71ef0e047d // indirect
 	github.com/agext/levenshtein v1.2.2 // indirect
@@ -72,7 +76,6 @@ require (
 	github.com/stevenle/topsort v0.0.0-20130922064739-8130c1d7596b // indirect
 	github.com/tkrajina/go-reflector v0.5.6 // indirect
 	github.com/turbot/go-kit v0.5.0 // indirect
-	github.com/turbot/steampipe-plugin-sdk/v5 v5.3.0 // indirect
 	github.com/uber/jaeger-client-go v2.30.0+incompatible // indirect
 	github.com/uber/jaeger-lib v2.4.1+incompatible // indirect
 	github.com/ulikunitz/xz v0.5.8 // indirect
