@@ -11,7 +11,7 @@ import (
 func tableOnepasswordVault(ctx context.Context) *plugin.Table {
 	return &plugin.Table{
 		Name:        "onepassword_vault",
-		Description: "ACLs for the service version.",
+		Description: "Retrieve information about your vaults.",
 		List: &plugin.ListConfig{
 			Hydrate: listVaults,
 		},
