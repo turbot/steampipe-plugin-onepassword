@@ -9,13 +9,13 @@ import (
 	"github.com/turbot/steampipe-plugin-sdk/v5/plugin/transform"
 )
 
-func tableOnepasswordItem(ctx context.Context) *plugin.Table {
+func tableOnepasswordItemLogin(ctx context.Context) *plugin.Table {
 	return &plugin.Table{
-		Name:        "onepassword_item",
-		Description: "Retrieve information about your items.",
+		Name:        "onepassword_item_login",
+		Description: "Retrieve information about your item logins.",
 		List: &plugin.ListConfig{
 			ParentHydrate: listVaults,
-			Hydrate:       listItems,
+			Hydrate:       listItemLogins,
 			KeyColumns: []*plugin.KeyColumn{
 				{
 					Name:    "vault_id",
@@ -24,7 +24,7 @@ func tableOnepasswordItem(ctx context.Context) *plugin.Table {
 			},
 		},
 		Get: &plugin.GetConfig{
-			Hydrate:    getItem,
+			Hydrate:    getItemLogin,
 			KeyColumns: plugin.AllColumns([]string{"id", "vault_id"}),
 		},
 		Columns: []*plugin.Column{
@@ -38,6 +38,18 @@ func tableOnepasswordItem(ctx context.Context) *plugin.Table {
 				Type:        proto.ColumnType_STRING,
 				Description: "The parent vault ID of the Item.",
 				Transform:   transform.FromField("Vault.ID"),
+			},
+			{
+				Name:        "username",
+				Type:        proto.ColumnType_STRING,
+				Description: "The parent vault ID of the Item.",
+				Hydrate:     getItemLogin,
+			},
+			{
+				Name:        "password",
+				Type:        proto.ColumnType_STRING,
+				Description: "The parent vault ID of the Item.",
+				Hydrate:     getItemLogin,
 			},
 			{
 				Name:        "favorite",
@@ -54,18 +66,6 @@ func tableOnepasswordItem(ctx context.Context) *plugin.Table {
 				Type:        proto.ColumnType_STRING,
 				Description: "The category of the item.",
 			},
-
-			{
-				Name:        "sections",
-				Type:        proto.ColumnType_JSON,
-				Description: "The category of the item.",
-			},
-			{
-				Name:        "files",
-				Type:        proto.ColumnType_JSON,
-				Description: "The category of the item.",
-			},
-
 			{
 				Name:        "last_edited_by",
 				Type:        proto.ColumnType_STRING,
@@ -81,6 +81,35 @@ func tableOnepasswordItem(ctx context.Context) *plugin.Table {
 				Type:        proto.ColumnType_TIMESTAMP,
 				Description: "Item updated at.",
 			},
+			{
+				Name:        "sections",
+				Type:        proto.ColumnType_JSON,
+				Description: "The category of the item.",
+				Hydrate:     getItemLogin,
+			},
+			{
+				Name:        "fields",
+				Type:        proto.ColumnType_JSON,
+				Description: "The category of the item.",
+				Hydrate:     getItemLogin,
+			},
+			{
+				Name:        "files",
+				Type:        proto.ColumnType_JSON,
+				Description: "The category of the item.",
+				Hydrate:     getItemLogin,
+			},
+			{
+				Name:        "tags",
+				Type:        proto.ColumnType_JSON,
+				Description: "Item Tags.",
+			},
+			{
+				Name:        "urls",
+				Type:        proto.ColumnType_JSON,
+				Description: "Item URLs.",
+				Transform:   transform.FromField("URLs"),
+			},
 
 			/// Steampipe standard columns
 			{
@@ -92,7 +121,13 @@ func tableOnepasswordItem(ctx context.Context) *plugin.Table {
 	}
 }
 
-func listItems(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (interface{}, error) {
+type ItemLogin struct {
+	Username string
+	Password string
+	onepassword.Item
+}
+
+func listItemLogins(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (interface{}, error) {
 	vault := h.Item.(onepassword.Vault)
 	vault_id := d.EqualsQuals["vault_id"].GetStringValue()
 
@@ -103,19 +138,20 @@ func listItems(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) 
 
 	client, err := getClient(ctx, d)
 	if err != nil {
-		plugin.Logger(ctx).Error("onepassword_Item.listItems", "connection_error", err)
+		plugin.Logger(ctx).Error("onepassword_item_login.listItemLogins", "connection_error", err)
 		return nil, err
 	}
 
 	items, err := client.GetItems(vault.ID)
 	if err != nil {
-		plugin.Logger(ctx).Error("onepassword_item.listItems", "api_error", err)
+		plugin.Logger(ctx).Error("onepassword_item_login.listItemLogins", "api_error", err)
 		return nil, err
 	}
 
 	for _, item := range items {
-		d.StreamListItem(ctx, item)
-
+		if item.Category == "LOGIN" {
+			d.StreamListItem(ctx, ItemLogin{"", "", item})
+		}
 		// Context can be cancelled due to manual cancellation or the limit has been hit
 		if d.RowsRemaining(ctx) == 0 {
 			return nil, nil
@@ -125,11 +161,17 @@ func listItems(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) 
 	return nil, nil
 }
 
-func getItem(ctx context.Context, d *plugin.QueryData, _ *plugin.HydrateData) (interface{}, error) {
-	id := d.EqualsQuals["id"].GetStringValue()
-	vault_id := d.EqualsQuals["vault_id"].GetStringValue()
+func getItemLogin(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (interface{}, error) {
+	var id, vault_id string
+	if h.Item != nil {
+		id = h.Item.(ItemLogin).Item.ID
+		vault_id = h.Item.(ItemLogin).Item.Vault.ID
+	} else {
+		id = d.EqualsQualString("id")
+		vault_id = d.EqualsQualString("vault_id")
+	}
 
-	// Check if id is empty
+	// Check if id or vault_id is empty
 	if id == "" || vault_id == "" {
 		return nil, nil
 	}
@@ -145,6 +187,18 @@ func getItem(ctx context.Context, d *plugin.QueryData, _ *plugin.HydrateData) (i
 		plugin.Logger(ctx).Error("onepassword_item.getItem", "api_error", err)
 		return nil, err
 	}
+	var username, password string
+	if item.Category == "LOGIN" {
+		for _, field := range item.Fields {
+			if field.ID == "username" && field.Purpose == "USERNAME" {
+				username = field.Value
+			}
+			if field.ID == "password" && field.Purpose == "PASSWORD" {
+				password = field.Value
+			}
+		}
+		return ItemLogin{username, password, *item}, nil
+	}
 
-	return item, nil
+	return nil, nil
 }

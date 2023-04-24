@@ -3,17 +3,19 @@ package onepassword
 import (
 	"context"
 
+	"github.com/1Password/connect-sdk-go/onepassword"
 	"github.com/turbot/steampipe-plugin-sdk/v5/grpc/proto"
 	"github.com/turbot/steampipe-plugin-sdk/v5/plugin"
 	"github.com/turbot/steampipe-plugin-sdk/v5/plugin/transform"
 )
 
-func tableOnepasswordItemField(ctx context.Context) *plugin.Table {
+func tableOnepasswordItemFile(ctx context.Context) *plugin.Table {
 	return &plugin.Table{
-		Name:        "onepassword_item_field",
-		Description: "Retrieve information about your item fields.",
+		Name:        "onepassword_item_file",
+		Description: "Retrieve information about your item files.",
 		List: &plugin.ListConfig{
-			Hydrate: listItemFields,
+			ParentHydrate: listVaults,
+			Hydrate:       listItemFiles,
 			KeyColumns: []*plugin.KeyColumn{
 				{
 					Name:    "item_id",
@@ -21,7 +23,7 @@ func tableOnepasswordItemField(ctx context.Context) *plugin.Table {
 				},
 				{
 					Name:    "vault_id",
-					Require: plugin.Required,
+					Require: plugin.Optional,
 				},
 			},
 		},
@@ -38,14 +40,16 @@ func tableOnepasswordItemField(ctx context.Context) *plugin.Table {
 				Transform:   transform.FromQual("item_id"),
 			},
 			{
-				Name:        "label",
+				Name:        "name",
 				Type:        proto.ColumnType_STRING,
 				Description: "The title of this Item.",
 			},
 			{
-				Name:        "value",
-				Type:        proto.ColumnType_STRING,
+				Name:        "content",
+				Type:        proto.ColumnType_JSON,
 				Description: "The parent vault ID of the Item.",
+				Hydrate:     getFileContent,
+				Transform:   transform.FromValue(),
 			},
 			{
 				Name:        "vault_id",
@@ -101,24 +105,30 @@ func tableOnepasswordItemField(ctx context.Context) *plugin.Table {
 	}
 }
 
-func listItemFields(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (interface{}, error) {
+func listItemFiles(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (interface{}, error) {
 	item_id := d.EqualsQualString("item_id")
-	vault_id := d.EqualsQualString("vault_id")
+	vault := h.Item.(onepassword.Vault)
+	vault_id := d.EqualsQuals["vault_id"].GetStringValue()
+
+	// check if the provided vault_id is not matching with the parentHydrate
+	if vault_id != "" && vault_id != vault.Name {
+		return nil, nil
+	}
 
 	client, err := getClient(ctx, d)
 	if err != nil {
-		plugin.Logger(ctx).Error("onepassword_Item.listItemFields", "connection_error", err)
+		plugin.Logger(ctx).Error("onepassword_item_file.listItemFiles", "connection_error", err)
 		return nil, err
 	}
 
-	item, err := client.GetItem(item_id, vault_id)
+	files, err := client.GetFiles(item_id, vault.ID)
 	if err != nil {
-		plugin.Logger(ctx).Error("onepassword_item.listItemFields", "api_error", err)
+		plugin.Logger(ctx).Error("onepassword_item_file.listItemFiles", "api_error", err)
 		return nil, err
 	}
 
-	for _, field := range item.Fields {
-		d.StreamListItem(ctx, field)
+	for _, file := range files {
+		d.StreamListItem(ctx, file)
 
 		// Context can be cancelled due to manual cancellation or the limit has been hit
 		if d.RowsRemaining(ctx) == 0 {
@@ -127,4 +137,22 @@ func listItemFields(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateD
 	}
 
 	return nil, nil
+}
+
+func getFileContent(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (interface{}, error) {
+	file := h.Item.(onepassword.File)
+
+	client, err := getClient(ctx, d)
+	if err != nil {
+		plugin.Logger(ctx).Error("onepassword_item_file.getFileContent", "connection_error", err)
+		return nil, err
+	}
+
+	content, err := client.GetFileContent(&file)
+	if err != nil {
+		plugin.Logger(ctx).Error("onepassword_item_file.getFileContent", "api_error", err)
+		return nil, err
+	}
+
+	return string(content), nil
 }

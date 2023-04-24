@@ -21,7 +21,8 @@ func Plugin(ctx context.Context) *plugin.Plugin {
 		TableMap: map[string]*plugin.Table{
 			"onepassword_vault":      tableOnepasswordVault(ctx),
 			"onepassword_item":       tableOnepasswordItem(ctx),
-			"onepassword_item_field": tableOnepasswordItemField(ctx),
+			"onepassword_item_file":  tableOnepasswordItemFile(ctx),
+			"onepassword_item_login": tableOnepasswordItemLogin(ctx),
 		},
 	}
 	return p
