@@ -27,6 +27,10 @@ func tableOnepasswordItemFile(ctx context.Context) *plugin.Table {
 				},
 			},
 		},
+		Get: &plugin.GetConfig{
+			Hydrate:    getItemFile,
+			KeyColumns: plugin.AllColumns([]string{"id", "item_id", "vault_id"}),
+		},
 		Columns: []*plugin.Column{
 			{
 				Name:        "id",
@@ -46,17 +50,9 @@ func tableOnepasswordItemFile(ctx context.Context) *plugin.Table {
 				Description: "The title of this Item.",
 			},
 			{
-				Name:        "content",
-				Type:        proto.ColumnType_JSON,
-				Description: "The parent vault ID of the Item.",
-				Hydrate:     getFileContent,
-				Transform:   transform.FromValue(),
-			},
-			{
 				Name:        "vault_id",
 				Type:        proto.ColumnType_STRING,
 				Description: "The ID of the Item.",
-				Transform:   transform.FromQual("vault_id"),
 			},
 			{
 				Name:        "entropy",
@@ -85,6 +81,13 @@ func tableOnepasswordItemFile(ctx context.Context) *plugin.Table {
 				Description: "The category of the item.",
 			},
 			{
+				Name:        "content",
+				Type:        proto.ColumnType_JSON,
+				Description: "The parent vault ID of the Item.",
+				Hydrate:     getFileContent,
+				Transform:   transform.FromValue(),
+			},
+			{
 				Name:        "recipe",
 				Type:        proto.ColumnType_JSON,
 				Description: "The category of the item.",
@@ -104,6 +107,11 @@ func tableOnepasswordItemFile(ctx context.Context) *plugin.Table {
 			},
 		},
 	}
+}
+
+type ItemFile struct {
+	VaultId string
+	onepassword.File
 }
 
 func listItemFiles(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (interface{}, error) {
@@ -129,7 +137,7 @@ func listItemFiles(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateDa
 	}
 
 	for _, file := range files {
-		d.StreamListItem(ctx, file)
+		d.StreamListItem(ctx, ItemFile{vault.ID, file})
 
 		// Context can be cancelled due to manual cancellation or the limit has been hit
 		if d.RowsRemaining(ctx) == 0 {
@@ -140,8 +148,33 @@ func listItemFiles(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateDa
 	return nil, nil
 }
 
+func getItemFile(ctx context.Context, d *plugin.QueryData, _ *plugin.HydrateData) (interface{}, error) {
+	id := d.EqualsQualString("id")
+	item_id := d.EqualsQualString("item_id")
+	vault_id := d.EqualsQualString("vault_id")
+
+	// Check if id, item_id or vault_id is empty
+	if id == "" || item_id == "" || vault_id == "" {
+		return nil, nil
+	}
+
+	client, err := getClient(ctx, d)
+	if err != nil {
+		plugin.Logger(ctx).Error("onepassword_item_file.getItemFile", "connection_error", err)
+		return nil, err
+	}
+
+	file, err := client.GetFile(id, item_id, vault_id)
+	if err != nil {
+		plugin.Logger(ctx).Error("onepassword_item_file.getItemFile", "api_error", err)
+		return nil, err
+	}
+
+	return ItemFile{vault_id, *file}, nil
+}
+
 func getFileContent(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (interface{}, error) {
-	file := h.Item.(onepassword.File)
+	file := h.Item.(ItemFile).File
 
 	client, err := getClient(ctx, d)
 	if err != nil {

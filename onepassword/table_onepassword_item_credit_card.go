@@ -41,7 +41,7 @@ func tableOnepasswordItemCreditCard(ctx context.Context) *plugin.Table {
 				Transform:   transform.FromField("Vault.ID"),
 			},
 			{
-				Name:        "cardholder",
+				Name:        "card_holder",
 				Type:        proto.ColumnType_STRING,
 				Description: "The card holder name for the Item.",
 				Hydrate:     getItemCreditCard,
@@ -147,7 +147,7 @@ func tableOnepasswordItemCreditCard(ctx context.Context) *plugin.Table {
 }
 
 type ItemCreditCard struct {
-	Cardholder string
+	CardHolder string
 	Type       string
 	Ccnum      string
 	Cvv        string
