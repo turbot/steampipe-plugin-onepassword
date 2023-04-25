@@ -35,13 +35,13 @@ func tableOnepasswordItemFile(ctx context.Context) *plugin.Table {
 			{
 				Name:        "id",
 				Type:        proto.ColumnType_STRING,
-				Description: "The ID of the Item.",
+				Description: "The UUID of the item.",
 				Transform:   transform.FromField("ID"),
 			},
 			{
 				Name:        "item_id",
 				Type:        proto.ColumnType_STRING,
-				Description: "The ID of the Item.",
+				Description: "The UUID of the item.",
 				Transform:   transform.FromQual("item_id"),
 			},
 			{
@@ -52,33 +52,33 @@ func tableOnepasswordItemFile(ctx context.Context) *plugin.Table {
 			{
 				Name:        "vault_id",
 				Type:        proto.ColumnType_STRING,
-				Description: "The ID of the Item.",
+				Description: "The UUID of the vault the item is in.",
 			},
 			{
 				Name:        "entropy",
 				Type:        proto.ColumnType_DOUBLE,
-				Description: "Is the item favorite.",
+				Description: "Whether the item is marked as a favorite.",
 			},
 			{
 				Name:        "generate",
 				Type:        proto.ColumnType_BOOL,
-				Description: "The version of the item.",
+				Description: "The generate of the item.",
 			},
 			{
 				Name:        "purpose",
 				Type:        proto.ColumnType_STRING,
-				Description: "The category of the item.",
+				Description: "The purpose of the item.",
 			},
 			{
 				Name:        "totp",
 				Type:        proto.ColumnType_STRING,
-				Description: "The category of the item.",
+				Description: "The TOTP of the item.",
 				Transform:   transform.FromField("TOTP"),
 			},
 			{
 				Name:        "type",
 				Type:        proto.ColumnType_STRING,
-				Description: "The category of the item.",
+				Description: "The type of the item.",
 			},
 			{
 				Name:        "content",
@@ -90,18 +90,18 @@ func tableOnepasswordItemFile(ctx context.Context) *plugin.Table {
 			{
 				Name:        "recipe",
 				Type:        proto.ColumnType_JSON,
-				Description: "The category of the item.",
+				Description: "The recipe of the item.",
 			},
 			{
 				Name:        "section",
 				Type:        proto.ColumnType_JSON,
-				Description: "UUID of the user that last edited the item.",
+				Description: "The section of the item.",
 			},
 
 			/// Steampipe standard columns
 			{
 				Name:        "title",
-				Description: "Title of the resource.",
+				Description: "The title of the item.",
 				Type:        proto.ColumnType_STRING,
 				Transform:   transform.FromField("ID"),
 			},
