@@ -123,7 +123,7 @@ type ItemPassword struct {
 
 func listItemPasswords(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (interface{}, error) {
 	vault := h.Item.(onepassword.Vault)
-	vault_id := d.EqualsQuals["vault_id"].GetStringValue()
+	vault_id := d.EqualsQualString("vault_id")
 
 	// check if the provided vault_id is not matching with the parentHydrate
 	if vault_id != "" && vault_id != vault.ID {

@@ -107,7 +107,7 @@ func listVaults(ctx context.Context, d *plugin.QueryData, _ *plugin.HydrateData)
 }
 
 func getVault(ctx context.Context, d *plugin.QueryData, _ *plugin.HydrateData) (interface{}, error) {
-	id := d.EqualsQuals["id"].GetStringValue()
+	id := d.EqualsQualString("id")
 
 	// Check if id is empty
 	if id == "" {

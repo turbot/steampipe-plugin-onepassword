@@ -96,7 +96,7 @@ type ItemFile struct {
 func listItemFiles(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (interface{}, error) {
 	item_id := d.EqualsQualString("item_id")
 	vault := h.Item.(onepassword.Vault)
-	vault_id := d.EqualsQuals["vault_id"].GetStringValue()
+	vault_id := d.EqualsQualString("vault_id")
 
 	// check if the item_id is empty or the provided vault_id is not matching with the parentHydrate
 	if item_id == "" || (vault_id != "" && vault_id != vault.ID) {
