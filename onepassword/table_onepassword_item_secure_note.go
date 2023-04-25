@@ -143,6 +143,8 @@ func listItemSecureNotes(ctx context.Context, d *plugin.QueryData, h *plugin.Hyd
 	}
 
 	for _, item := range items {
+
+		// restricting data based on the item category SECURE_NOTE
 		if item.Category == "SECURE_NOTE" {
 			d.StreamListItem(ctx, ItemSecureNote{"", item})
 		}
@@ -181,6 +183,8 @@ func getItemSecureNote(ctx context.Context, d *plugin.QueryData, h *plugin.Hydra
 		plugin.Logger(ctx).Error("onepassword_item_secure_note.getItemSecureNote", "api_error", err)
 		return nil, err
 	}
+
+	// restricting data based on the item category SECURE_NOTE
 	var notesPlain string
 	if item.Category == "SECURE_NOTE" {
 		for _, field := range item.Fields {

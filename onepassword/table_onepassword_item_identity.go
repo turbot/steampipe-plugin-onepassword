@@ -200,6 +200,8 @@ func listItemIdentities(ctx context.Context, d *plugin.QueryData, h *plugin.Hydr
 	}
 
 	for _, item := range items {
+
+		// restricting data based on the item category IDENTITY
 		if item.Category == "IDENTITY" {
 			d.StreamListItem(ctx, ItemIdentity{"", "", "", "", "", "", "", "", "", item})
 		}
@@ -238,6 +240,8 @@ func getItemIdentity(ctx context.Context, d *plugin.QueryData, h *plugin.Hydrate
 		plugin.Logger(ctx).Error("onepassword_item.getItem", "api_error", err)
 		return nil, err
 	}
+
+	// restricting data based on the item category IDENTITY
 	var firstname, initial, lastname, birthdate, gender, occupation, company, department, jobtitle string
 	if item.Category == "IDENTITY" {
 		for _, field := range item.Fields {

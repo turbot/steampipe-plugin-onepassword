@@ -143,6 +143,8 @@ func listItemSoftwareLicenses(ctx context.Context, d *plugin.QueryData, h *plugi
 	}
 
 	for _, item := range items {
+
+		// restricting data based on the item category SOFTWARE_LICENSE
 		if item.Category == "SOFTWARE_LICENSE" {
 			d.StreamListItem(ctx, ItemSoftwareLicense{"", item})
 		}
@@ -181,6 +183,8 @@ func getItemSoftwareLicense(ctx context.Context, d *plugin.QueryData, h *plugin.
 		plugin.Logger(ctx).Error("onepassword_item.getItem", "api_error", err)
 		return nil, err
 	}
+
+	// restricting data based on the item category SOFTWARE_LICENSE
 	var licenseKey string
 	if item.Category == "SOFTWARE_LICENSE" {
 		for _, field := range item.Fields {

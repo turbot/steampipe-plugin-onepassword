@@ -150,6 +150,8 @@ func listItemLogins(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateD
 	}
 
 	for _, item := range items {
+
+		// restricting data based on the item category LOGIN
 		if item.Category == "LOGIN" {
 			d.StreamListItem(ctx, ItemLogin{"", "", item})
 		}
@@ -188,6 +190,8 @@ func getItemLogin(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateDat
 		plugin.Logger(ctx).Error("onepassword_item.getItem", "api_error", err)
 		return nil, err
 	}
+
+	// restricting data based on the item category LOGIN
 	var username, password string
 	if item.Category == "LOGIN" {
 		for _, field := range item.Fields {

@@ -150,6 +150,8 @@ func listItemAPICredentials(ctx context.Context, d *plugin.QueryData, h *plugin.
 	}
 
 	for _, item := range items {
+
+		// restricting data based on the item category API_CREDENTIAL
 		if item.Category == "API_CREDENTIAL" {
 			d.StreamListItem(ctx, ItemAPICrdential{"", "", item})
 		}
@@ -188,6 +190,8 @@ func getItemAPICredential(ctx context.Context, d *plugin.QueryData, h *plugin.Hy
 		plugin.Logger(ctx).Error("onepassword_item_api_credential.getItemAPICredential", "api_error", err)
 		return nil, err
 	}
+
+	// restricting data based on the item category API_CREDENTIAL
 	var username, credential string
 	if item.Category == "API_CREDENTIAL" {
 		for _, field := range item.Fields {

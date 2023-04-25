@@ -178,6 +178,8 @@ func listItemCreditCards(ctx context.Context, d *plugin.QueryData, h *plugin.Hyd
 	}
 
 	for _, item := range items {
+
+		// restricting data based on the item category CREDIT_CARD
 		if item.Category == "CREDIT_CARD" {
 			d.StreamListItem(ctx, ItemCreditCard{"", "", "", "", "", "", item})
 		}
@@ -216,6 +218,8 @@ func getItemCreditCard(ctx context.Context, d *plugin.QueryData, h *plugin.Hydra
 		plugin.Logger(ctx).Error("onepassword_item.getItem", "api_error", err)
 		return nil, err
 	}
+
+	// restricting data based on the item category CREDIT_CARD
 	var cardholder, cctype, ccnum, cvv, expiry, valid_from string
 	if item.Category == "CREDIT_CARD" {
 		for _, field := range item.Fields {
