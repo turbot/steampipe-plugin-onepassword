@@ -124,7 +124,6 @@ func listItems(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) 
 		plugin.Logger(ctx).Error("onepassword_Item.listItems", "connection_error", err)
 		return nil, err
 	}
-	plugin.Logger(ctx).Error("before api call")
 	items, err := client.GetItems(vault.ID)
 	if err != nil {
 		plugin.Logger(ctx).Error("onepassword_item.listItems", "api_error", err)
@@ -132,7 +131,6 @@ func listItems(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) 
 	}
 
 	for _, item := range items {
-		plugin.Logger(ctx).Error("after api call", item.Title)
 		d.StreamListItem(ctx, item)
 
 		// Context can be cancelled due to manual cancellation or the limit has been hit
