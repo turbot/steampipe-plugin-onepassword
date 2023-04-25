@@ -12,7 +12,7 @@ import (
 func tableOnepasswordItemAPICredential(ctx context.Context) *plugin.Table {
 	return &plugin.Table{
 		Name:        "onepassword_item_api_credential",
-		Description: "Retrieve information about your item API credentials.",
+		Description: "Retrieve information about your API credentials.",
 		List: &plugin.ListConfig{
 			ParentHydrate: listVaults,
 			Hydrate:       listItemAPICredentials,

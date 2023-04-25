@@ -12,7 +12,7 @@ import (
 func tableOnepasswordItemIdentity(ctx context.Context) *plugin.Table {
 	return &plugin.Table{
 		Name:        "onepassword_item_identity",
-		Description: "Retrieve information about your item of category Identity.",
+		Description: "Retrieve information about your identities.",
 		List: &plugin.ListConfig{
 			ParentHydrate: listVaults,
 			Hydrate:       listItemIdentities,

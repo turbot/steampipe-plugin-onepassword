@@ -12,7 +12,7 @@ import (
 func tableOnepasswordItemFile(ctx context.Context) *plugin.Table {
 	return &plugin.Table{
 		Name:        "onepassword_item_file",
-		Description: "Retrieve information about your item files.",
+		Description: "Retrieve information about your files.",
 		List: &plugin.ListConfig{
 			ParentHydrate: listVaults,
 			Hydrate:       listItemFiles,

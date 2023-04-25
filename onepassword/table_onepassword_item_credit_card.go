@@ -12,7 +12,7 @@ import (
 func tableOnepasswordItemCreditCard(ctx context.Context) *plugin.Table {
 	return &plugin.Table{
 		Name:        "onepassword_item_credit_card",
-		Description: "Retrieve information about your item of category credit card.",
+		Description: "Retrieve information about your credit cards.",
 		List: &plugin.ListConfig{
 			ParentHydrate: listVaults,
 			Hydrate:       listItemCreditCards,
