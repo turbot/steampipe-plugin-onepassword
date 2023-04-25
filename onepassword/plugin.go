@@ -19,12 +19,12 @@ func Plugin(ctx context.Context) *plugin.Plugin {
 			"onepassword_item":                  tableOnepasswordItem(ctx),
 			"onepassword_item_api_credential":   tableOnepasswordItemAPICredential(ctx),
 			"onepassword_item_file":             tableOnepasswordItemFile(ctx),
-			"onepassword_item_login":            tableOnepasswordItemLogin(ctx),
-			"onepassword_item_secure_note":      tableOnepasswordItemSecureNote(ctx),
-			"onepassword_item_password":         tableOnepasswordItemPassword(ctx),
-			"onepassword_vault":                 tableOnepasswordVault(ctx),
-			"onepassword_item_software_license": tableOnepasswordItemSoftwareLicense(ctx),
 			"onepassword_item_identity":         tableOnepasswordItemIdentity(ctx),
+			"onepassword_item_login":            tableOnepasswordItemLogin(ctx),
+			"onepassword_item_password":         tableOnepasswordItemPassword(ctx),
+			"onepassword_item_secure_note":      tableOnepasswordItemSecureNote(ctx),
+			"onepassword_item_software_license": tableOnepasswordItemSoftwareLicense(ctx),
+			"onepassword_vault":                 tableOnepasswordVault(ctx),
 		},
 	}
 	return p

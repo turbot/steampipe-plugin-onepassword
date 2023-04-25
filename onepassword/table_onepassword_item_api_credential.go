@@ -31,31 +31,31 @@ func tableOnepasswordItemAPICredential(ctx context.Context) *plugin.Table {
 			{
 				Name:        "id",
 				Type:        proto.ColumnType_STRING,
-				Description: "The ID of the Item.",
+				Description: "The UUID of the item.",
 				Transform:   transform.FromField("ID"),
 			},
 			{
 				Name:        "vault_id",
 				Type:        proto.ColumnType_STRING,
-				Description: "The parent vault ID of the Item.",
+				Description: "The UUID of the vault the item is in.",
 				Transform:   transform.FromField("Vault.ID"),
 			},
 			{
 				Name:        "username",
 				Type:        proto.ColumnType_STRING,
-				Description: "The parent vault ID of the Item.",
+				Description: "The username of the item.",
 				Hydrate:     getItemAPICredential,
 			},
 			{
 				Name:        "credential",
 				Type:        proto.ColumnType_STRING,
-				Description: "The parent vault ID of the Item.",
+				Description: "The credential of the item.",
 				Hydrate:     getItemAPICredential,
 			},
 			{
 				Name:        "favorite",
 				Type:        proto.ColumnType_BOOL,
-				Description: "Is the item favorite.",
+				Description: "Whether the item is marked as a favorite.",
 			},
 			{
 				Name:        "version",
@@ -75,47 +75,47 @@ func tableOnepasswordItemAPICredential(ctx context.Context) *plugin.Table {
 			{
 				Name:        "created_at",
 				Type:        proto.ColumnType_TIMESTAMP,
-				Description: "Item created at.",
+				Description: "Date and time when the item was created.",
 			},
 			{
 				Name:        "updated_at",
 				Type:        proto.ColumnType_TIMESTAMP,
-				Description: "Item updated at.",
+				Description: "Date and time when the vault or its contents were last changed.",
 			},
 			{
 				Name:        "sections",
 				Type:        proto.ColumnType_JSON,
-				Description: "The category of the item.",
+				Description: "The sections of the item.",
 				Hydrate:     getItemAPICredential,
 			},
 			{
 				Name:        "fields",
 				Type:        proto.ColumnType_JSON,
-				Description: "The category of the item.",
+				Description: "The fields of the item.",
 				Hydrate:     getItemAPICredential,
 			},
 			{
 				Name:        "files",
 				Type:        proto.ColumnType_JSON,
-				Description: "The category of the item.",
+				Description: "The files of the item.",
 				Hydrate:     getItemAPICredential,
 			},
 			{
 				Name:        "tags",
 				Type:        proto.ColumnType_JSON,
-				Description: "Item Tags.",
+				Description: "An array of strings of the tags assigned to the item.",
 			},
 			{
 				Name:        "urls",
 				Type:        proto.ColumnType_JSON,
-				Description: "Item URLs.",
+				Description: "Array of URL objects containing URLs for the item.",
 				Transform:   transform.FromField("URLs"),
 			},
 
 			/// Steampipe standard columns
 			{
 				Name:        "title",
-				Description: "Title of the resource.",
+				Description: "The title of the item.",
 				Type:        proto.ColumnType_STRING,
 			},
 		},

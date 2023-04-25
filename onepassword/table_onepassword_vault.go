@@ -23,34 +23,36 @@ func tableOnepasswordVault(ctx context.Context) *plugin.Table {
 			{
 				Name:        "id",
 				Type:        proto.ColumnType_STRING,
-				Description: "The ID of this vault.",
+				Description: "The UUID of the vault.",
 				Transform:   transform.FromField("ID"),
 			},
 			{
 				Name:        "name",
 				Type:        proto.ColumnType_STRING,
-				Description: "The name of this vault.",
+				Description: "The name of the vault.",
 			},
 			{
 				Name:        "attr_version",
 				Type:        proto.ColumnType_INT,
-				Description: "The vault version.",
+				Description: "The version of the vault metadata.",
 			},
 			{
 				Name:        "created_at",
 				Type:        proto.ColumnType_TIMESTAMP,
-				Description: "Timestamp of when the vault was created.",
+				Description: "Date and time when the vault was created.",
 			},
 			{
 				Name:        "content_version",
 				Type:        proto.ColumnType_INT,
 				Description: "The version of the vault contents.",
 				Transform:   transform.FromField("ContentVersoin"),
+				// NOTE: The typo 'ContentVersoin' is from the SDK, if and when the SDK is updated, we need to sync with it.
+				// Ref: https://github.com/1Password/connect-sdk-go/blob/ac4a2c9c017fcfb76ac97b63b145121926e06fd3/onepassword/vaults.go#L15
 			},
 			{
 				Name:        "description",
 				Type:        proto.ColumnType_STRING,
-				Description: "The description of this vault.",
+				Description: "The description for the vault.",
 			},
 			{
 				Name:        "items",
@@ -60,18 +62,18 @@ func tableOnepasswordVault(ctx context.Context) *plugin.Table {
 			{
 				Name:        "type",
 				Type:        proto.ColumnType_STRING,
-				Description: "The type of this vault.",
+				Description: "The type of vault. Possible values are EVERYONE, PERSONAL and USER_CREATED.",
 			},
 			{
 				Name:        "updated_at",
 				Type:        proto.ColumnType_TIMESTAMP,
-				Description: "Timestamp of when the vault was updated.",
+				Description: "Date and time when the vault or its contents were last changed.",
 			},
 
 			/// Steampipe standard columns
 			{
 				Name:        "title",
-				Description: "Title of the resource.",
+				Description: "The title of the vault.",
 				Type:        proto.ColumnType_STRING,
 				Transform:   transform.FromField("Name"),
 			},
