@@ -41,7 +41,7 @@ func tableOnepasswordItemIdentity(ctx context.Context) *plugin.Table {
 				Transform:   transform.FromField("Vault.ID"),
 			},
 			{
-				Name:        "firstname",
+				Name:        "first_name",
 				Type:        proto.ColumnType_STRING,
 				Description: "The first name of the identity.",
 				Hydrate:     getItemIdentity,
@@ -53,29 +53,27 @@ func tableOnepasswordItemIdentity(ctx context.Context) *plugin.Table {
 				Hydrate:     getItemIdentity,
 			},
 			{
-				Name:        "lastname",
+				Name:        "last_name",
 				Type:        proto.ColumnType_STRING,
-				Description: "The last name of the identity",
+				Description: "The last name of the identity.",
 				Hydrate:     getItemIdentity,
 			},
 			{
-				Name:        "gender",
-				Type:        proto.ColumnType_STRING,
-				Description: "The gender of the identity.",
-				Hydrate:     getItemIdentity,
-			},
-			{
-				Name:        "birthdate",
+				Name:        "birth_date",
 				Type:        proto.ColumnType_TIMESTAMP,
-				Description: "The birthdate of the identity.",
+				Description: "The birth date of the identity.",
 				Hydrate:     getItemIdentity,
-				Transform:   transform.FromField("Birthdate").Transform(convertTimestamp),
+				Transform:   transform.FromField("BirthDate").Transform(convertTimestamp),
 			},
 			{
-				Name:        "occupation",
+				Name:        "category",
 				Type:        proto.ColumnType_STRING,
-				Description: "The occupation of the identity.",
-				Hydrate:     getItemIdentity,
+				Description: "The category of the item.",
+			},
+			{
+				Name:        "created_at",
+				Type:        proto.ColumnType_TIMESTAMP,
+				Description: "Date and time when the item was created.",
 			},
 			{
 				Name:        "company",
@@ -90,15 +88,27 @@ func tableOnepasswordItemIdentity(ctx context.Context) *plugin.Table {
 				Hydrate:     getItemIdentity,
 			},
 			{
-				Name:        "jobtitle",
+				Name:        "favorite",
+				Type:        proto.ColumnType_BOOL,
+				Description: "Whether the item is marked as a favorite.",
+			},
+			{
+				Name:        "gender",
+				Type:        proto.ColumnType_STRING,
+				Description: "The gender of the identity.",
+				Hydrate:     getItemIdentity,
+			},
+			{
+				Name:        "job_title",
 				Type:        proto.ColumnType_STRING,
 				Description: "The job title of the identity.",
 				Hydrate:     getItemIdentity,
 			},
 			{
-				Name:        "favorite",
-				Type:        proto.ColumnType_BOOL,
-				Description: "Whether the item is marked as a favorite.",
+				Name:        "occupation",
+				Type:        proto.ColumnType_STRING,
+				Description: "The occupation of the identity.",
+				Hydrate:     getItemIdentity,
 			},
 			{
 				Name:        "version",
@@ -106,19 +116,9 @@ func tableOnepasswordItemIdentity(ctx context.Context) *plugin.Table {
 				Description: "The version of the item.",
 			},
 			{
-				Name:        "category",
-				Type:        proto.ColumnType_STRING,
-				Description: "The category of the item.",
-			},
-			{
 				Name:        "last_edited_by",
 				Type:        proto.ColumnType_STRING,
 				Description: "UUID of the user that last edited the item.",
-			},
-			{
-				Name:        "created_at",
-				Type:        proto.ColumnType_TIMESTAMP,
-				Description: "Date and time when the item was created.",
 			},
 			{
 				Name:        "updated_at",
@@ -166,15 +166,15 @@ func tableOnepasswordItemIdentity(ctx context.Context) *plugin.Table {
 }
 
 type ItemIdentity struct {
-	Firstname  string
+	FirstName  string
 	Initial    string
-	Lastname   string
+	LastName   string
 	Gender     string
-	Birthdate  string
+	BirthDate  string
 	Occupation string
 	Company    string
 	Department string
-	Jobtitle   string
+	JobTitle   string
 	onepassword.Item
 }
 

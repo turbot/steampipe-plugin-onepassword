@@ -43,24 +43,14 @@ func tableOnepasswordItemAPICredential(ctx context.Context) *plugin.Table {
 			{
 				Name:        "username",
 				Type:        proto.ColumnType_STRING,
-				Description: "The username of the item.",
+				Description: "The username stored in the item.",
 				Hydrate:     getItemAPICredential,
 			},
 			{
 				Name:        "credential",
 				Type:        proto.ColumnType_STRING,
-				Description: "The credential of the item.",
+				Description: "The credential stored in the item.",
 				Hydrate:     getItemAPICredential,
-			},
-			{
-				Name:        "favorite",
-				Type:        proto.ColumnType_BOOL,
-				Description: "Whether the item is marked as a favorite.",
-			},
-			{
-				Name:        "version",
-				Type:        proto.ColumnType_INT,
-				Description: "The version of the item.",
 			},
 			{
 				Name:        "category",
@@ -68,19 +58,29 @@ func tableOnepasswordItemAPICredential(ctx context.Context) *plugin.Table {
 				Description: "The category of the item.",
 			},
 			{
-				Name:        "last_edited_by",
-				Type:        proto.ColumnType_STRING,
-				Description: "UUID of the user that last edited the item.",
-			},
-			{
 				Name:        "created_at",
 				Type:        proto.ColumnType_TIMESTAMP,
 				Description: "Date and time when the item was created.",
 			},
 			{
+				Name:        "favorite",
+				Type:        proto.ColumnType_BOOL,
+				Description: "Whether the item is marked as a favorite.",
+			},
+			{
+				Name:        "last_edited_by",
+				Type:        proto.ColumnType_STRING,
+				Description: "UUID of the user that last edited the item.",
+			},
+			{
 				Name:        "updated_at",
 				Type:        proto.ColumnType_TIMESTAMP,
 				Description: "Date and time when the vault or its contents were last changed.",
+			},
+			{
+				Name:        "version",
+				Type:        proto.ColumnType_INT,
+				Description: "The version of the item.",
 			},
 			{
 				Name:        "sections",

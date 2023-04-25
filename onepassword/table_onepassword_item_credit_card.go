@@ -41,10 +41,42 @@ func tableOnepasswordItemCreditCard(ctx context.Context) *plugin.Table {
 				Transform:   transform.FromField("Vault.ID"),
 			},
 			{
+				Name:        "favorite",
+				Type:        proto.ColumnType_BOOL,
+				Description: "Whether the item is marked as a favorite.",
+			},
+			{
 				Name:        "card_holder",
 				Type:        proto.ColumnType_STRING,
-				Description: "The card holder name for the Item.",
+				Description: "The card holder’s name for the credit card.",
 				Hydrate:     getItemCreditCard,
+			},
+			{
+				Name:        "category",
+				Type:        proto.ColumnType_STRING,
+				Description: "The category of the item.",
+			},
+			{
+				Name:        "credit_card_number",
+				Type:        proto.ColumnType_STRING,
+				Description: "The credit card number.",
+				Hydrate:     getItemCreditCard,
+			},
+			{
+				Name:        "created_at",
+				Type:        proto.ColumnType_TIMESTAMP,
+				Description: "Date and time when the item was created.",
+			},
+			{
+				Name:        "expiry_date",
+				Type:        proto.ColumnType_TIMESTAMP,
+				Description: "The expiry date of the credit card.",
+				Hydrate:     getItemCreditCard,
+			},
+			{
+				Name:        "last_edited_by",
+				Type:        proto.ColumnType_STRING,
+				Description: "UUID of the user that last edited the item.",
 			},
 			{
 				Name:        "type",
@@ -53,22 +85,9 @@ func tableOnepasswordItemCreditCard(ctx context.Context) *plugin.Table {
 				Hydrate:     getItemCreditCard,
 			},
 			{
-				Name:        "ccnum",
-				Type:        proto.ColumnType_STRING,
-				Description: "The card card number for the Item.",
-				Hydrate:     getItemCreditCard,
-			},
-			{
-				Name:        "cvv",
-				Type:        proto.ColumnType_STRING,
-				Description: "The card card number for the Item.",
-				Hydrate:     getItemCreditCard,
-			},
-			{
-				Name:        "expiry",
+				Name:        "updated_at",
 				Type:        proto.ColumnType_TIMESTAMP,
-				Description: "The expiry date of the credit card..",
-				Hydrate:     getItemCreditCard,
+				Description: "Date and time when the vault or its contents were last changed.",
 			},
 			{
 				Name:        "valid_from",
@@ -77,34 +96,15 @@ func tableOnepasswordItemCreditCard(ctx context.Context) *plugin.Table {
 				Hydrate:     getItemCreditCard,
 			},
 			{
-				Name:        "favorite",
-				Type:        proto.ColumnType_BOOL,
-				Description: "Whether the item is marked as a favorite.",
+				Name:        "verification_number",
+				Type:        proto.ColumnType_STRING,
+				Description: "The cvv number of the credit card.",
+				Hydrate:     getItemCreditCard,
 			},
 			{
 				Name:        "version",
 				Type:        proto.ColumnType_INT,
 				Description: "The version of the item.",
-			},
-			{
-				Name:        "category",
-				Type:        proto.ColumnType_STRING,
-				Description: "The category of the item.",
-			},
-			{
-				Name:        "last_edited_by",
-				Type:        proto.ColumnType_STRING,
-				Description: "UUID of the user that last edited the item.",
-			},
-			{
-				Name:        "created_at",
-				Type:        proto.ColumnType_TIMESTAMP,
-				Description: "Date and time when the item was created.",
-			},
-			{
-				Name:        "updated_at",
-				Type:        proto.ColumnType_TIMESTAMP,
-				Description: "Date and time when the vault or its contents were last changed.",
 			},
 			{
 				Name:        "sections",
@@ -147,12 +147,12 @@ func tableOnepasswordItemCreditCard(ctx context.Context) *plugin.Table {
 }
 
 type ItemCreditCard struct {
-	CardHolder string
-	Type       string
-	Ccnum      string
-	Cvv        string
-	Expiry     string
-	ValidFrom  string
+	CardHolder         string
+	Type               string
+	CreditCardNumber   string
+	VerificationNumber string
+	ExpiryDate         string
+	ValidFrom          string
 	onepassword.Item
 }
 

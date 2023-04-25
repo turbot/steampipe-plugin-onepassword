@@ -46,19 +46,9 @@ func tableOnepasswordItem(ctx context.Context) *plugin.Table {
 				Description: "Whether the item is marked as a favorite.",
 			},
 			{
-				Name:        "version",
-				Type:        proto.ColumnType_INT,
-				Description: "The version of the item.",
-			},
-			{
 				Name:        "category",
 				Type:        proto.ColumnType_STRING,
 				Description: "The category of the item.",
-			},
-			{
-				Name:        "last_edited_by",
-				Type:        proto.ColumnType_STRING,
-				Description: "UUID of the account that last changed the item.",
 			},
 			{
 				Name:        "created_at",
@@ -66,9 +56,19 @@ func tableOnepasswordItem(ctx context.Context) *plugin.Table {
 				Description: "Date and time when the item was created.",
 			},
 			{
+				Name:        "last_edited_by",
+				Type:        proto.ColumnType_STRING,
+				Description: "UUID of the account that last changed the item.",
+			},
+			{
 				Name:        "updated_at",
 				Type:        proto.ColumnType_TIMESTAMP,
 				Description: "Date and time when the vault or its contents were last changed.",
+			},
+			{
+				Name:        "version",
+				Type:        proto.ColumnType_INT,
+				Description: "The version of the item.",
 			},
 			{
 				Name:        "fields",

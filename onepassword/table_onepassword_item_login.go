@@ -43,7 +43,7 @@ func tableOnepasswordItemLogin(ctx context.Context) *plugin.Table {
 			{
 				Name:        "username",
 				Type:        proto.ColumnType_STRING,
-				Description: "The UUID of the vault the item is in.",
+				Description: "The username stored in the item.",
 				Hydrate:     getItemLogin,
 			},
 			{
@@ -58,19 +58,9 @@ func tableOnepasswordItemLogin(ctx context.Context) *plugin.Table {
 				Description: "Whether the item is marked as a favorite.",
 			},
 			{
-				Name:        "version",
-				Type:        proto.ColumnType_INT,
-				Description: "The version of the item.",
-			},
-			{
 				Name:        "category",
 				Type:        proto.ColumnType_STRING,
 				Description: "The category of the item.",
-			},
-			{
-				Name:        "last_edited_by",
-				Type:        proto.ColumnType_STRING,
-				Description: "UUID of the user that last edited the item.",
 			},
 			{
 				Name:        "created_at",
@@ -78,9 +68,19 @@ func tableOnepasswordItemLogin(ctx context.Context) *plugin.Table {
 				Description: "Date and time when the item was created.",
 			},
 			{
+				Name:        "last_edited_by",
+				Type:        proto.ColumnType_STRING,
+				Description: "UUID of the user that last edited the item.",
+			},
+			{
 				Name:        "updated_at",
 				Type:        proto.ColumnType_TIMESTAMP,
 				Description: "Date and time when the vault or its contents were last changed.",
+			},
+			{
+				Name:        "version",
+				Type:        proto.ColumnType_INT,
+				Description: "The version of the item.",
 			},
 			{
 				Name:        "sections",
@@ -181,13 +181,13 @@ func getItemLogin(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateDat
 
 	client, err := getClient(ctx, d)
 	if err != nil {
-		plugin.Logger(ctx).Error("onepassword_item.getItem", "connection_error", err)
+		plugin.Logger(ctx).Error("onepassword_item_login.getItem", "connection_error", err)
 		return nil, err
 	}
 
 	item, err := client.GetItem(id, vault_id)
 	if err != nil {
-		plugin.Logger(ctx).Error("onepassword_item.getItem", "api_error", err)
+		plugin.Logger(ctx).Error("onepassword_item_login.getItem", "api_error", err)
 		return nil, err
 	}
 
