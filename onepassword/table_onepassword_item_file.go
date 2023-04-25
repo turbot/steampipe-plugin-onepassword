@@ -35,8 +35,13 @@ func tableOnepasswordItemFile(ctx context.Context) *plugin.Table {
 			{
 				Name:        "id",
 				Type:        proto.ColumnType_STRING,
-				Description: "The UUID of the item.",
+				Description: "The UUID of the file.",
 				Transform:   transform.FromField("ID"),
+			},
+			{
+				Name:        "name",
+				Type:        proto.ColumnType_STRING,
+				Description: "The name of the file.",
 			},
 			{
 				Name:        "item_id",
@@ -45,65 +50,39 @@ func tableOnepasswordItemFile(ctx context.Context) *plugin.Table {
 				Transform:   transform.FromQual("item_id"),
 			},
 			{
-				Name:        "name",
-				Type:        proto.ColumnType_STRING,
-				Description: "The title of this Item.",
-			},
-			{
 				Name:        "vault_id",
 				Type:        proto.ColumnType_STRING,
-				Description: "The UUID of the vault the item is in.",
+				Description: "The UUID of the vault the file is in.",
 			},
 			{
-				Name:        "entropy",
-				Type:        proto.ColumnType_DOUBLE,
-				Description: "Whether the item is marked as a favorite.",
-			},
-			{
-				Name:        "generate",
-				Type:        proto.ColumnType_BOOL,
-				Description: "The generate of the item.",
-			},
-			{
-				Name:        "purpose",
+				Name:        "content_path",
 				Type:        proto.ColumnType_STRING,
-				Description: "The purpose of the item.",
+				Description: "The path to download the contents of the file.",
 			},
 			{
-				Name:        "totp",
-				Type:        proto.ColumnType_STRING,
-				Description: "The TOTP of the item.",
-				Transform:   transform.FromField("TOTP"),
-			},
-			{
-				Name:        "type",
-				Type:        proto.ColumnType_STRING,
-				Description: "The type of the item.",
+				Name:        "size",
+				Type:        proto.ColumnType_INT,
+				Description: "The size of the file in bytes.",
 			},
 			{
 				Name:        "content",
 				Type:        proto.ColumnType_JSON,
-				Description: "The parent vault ID of the Item.",
+				Description: "The Base64-encoded contents of the file, if inline_files is set to true.",
 				Hydrate:     getFileContent,
 				Transform:   transform.FromValue(),
 			},
 			{
-				Name:        "recipe",
-				Type:        proto.ColumnType_JSON,
-				Description: "The recipe of the item.",
-			},
-			{
 				Name:        "section",
 				Type:        proto.ColumnType_JSON,
-				Description: "The section of the item.",
+				Description: "An object containing the UUID of a section in the item.",
 			},
 
 			/// Steampipe standard columns
 			{
 				Name:        "title",
-				Description: "The title of the item.",
+				Description: "The title of the file.",
 				Type:        proto.ColumnType_STRING,
-				Transform:   transform.FromField("ID"),
+				Transform:   transform.FromField("Name"),
 			},
 		},
 	}
