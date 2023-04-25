@@ -124,7 +124,6 @@ func listItems(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) 
 		plugin.Logger(ctx).Error("onepassword_Item.listItems", "connection_error", err)
 		return nil, err
 	}
-
 	items, err := client.GetItems(vault.ID)
 	if err != nil {
 		plugin.Logger(ctx).Error("onepassword_item.listItems", "api_error", err)
