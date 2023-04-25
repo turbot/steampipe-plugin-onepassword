@@ -9,13 +9,13 @@ import (
 	"github.com/turbot/steampipe-plugin-sdk/v5/plugin/transform"
 )
 
-func tableOnepasswordItem(ctx context.Context) *plugin.Table {
+func tableOnepasswordItemCreditCard(ctx context.Context) *plugin.Table {
 	return &plugin.Table{
-		Name:        "onepassword_item",
-		Description: "Retrieve information about your items.",
+		Name:        "onepassword_item_credit_card",
+		Description: "Retrieve information about your item of category credit card.",
 		List: &plugin.ListConfig{
 			ParentHydrate: listVaults,
-			Hydrate:       listItems,
+			Hydrate:       listItemCreditCards,
 			KeyColumns: []*plugin.KeyColumn{
 				{
 					Name:    "vault_id",
@@ -24,7 +24,7 @@ func tableOnepasswordItem(ctx context.Context) *plugin.Table {
 			},
 		},
 		Get: &plugin.GetConfig{
-			Hydrate:    getItem,
+			Hydrate:    getItemCreditCard,
 			KeyColumns: plugin.AllColumns([]string{"id", "vault_id"}),
 		},
 		Columns: []*plugin.Column{
@@ -38,6 +38,42 @@ func tableOnepasswordItem(ctx context.Context) *plugin.Table {
 				Type:        proto.ColumnType_STRING,
 				Description: "The parent vault ID of the Item.",
 				Transform:   transform.FromField("Vault.ID"),
+			},
+			{
+				Name:        "cardholder",
+				Type:        proto.ColumnType_STRING,
+				Description: "The card holder name for the Item.",
+				Hydrate:     getItemCreditCard,
+			},
+			{
+				Name:        "type",
+				Type:        proto.ColumnType_STRING,
+				Description: "The card holder name for the Item.",
+				Hydrate:     getItemCreditCard,
+			},
+			{
+				Name:        "ccnum",
+				Type:        proto.ColumnType_STRING,
+				Description: "The card card number for the Item.",
+				Hydrate:     getItemCreditCard,
+			},
+			{
+				Name:        "cvv",
+				Type:        proto.ColumnType_STRING,
+				Description: "The card card number for the Item.",
+				Hydrate:     getItemCreditCard,
+			},
+			{
+				Name:        "expiry",
+				Type:        proto.ColumnType_TIMESTAMP,
+				Description: "The card holder name for the Item.",
+				Hydrate:     getItemCreditCard,
+			},
+			{
+				Name:        "valid_from",
+				Type:        proto.ColumnType_TIMESTAMP,
+				Description: "The card holder name for the Item.",
+				Hydrate:     getItemCreditCard,
 			},
 			{
 				Name:        "favorite",
@@ -70,22 +106,22 @@ func tableOnepasswordItem(ctx context.Context) *plugin.Table {
 				Description: "Item updated at.",
 			},
 			{
+				Name:        "sections",
+				Type:        proto.ColumnType_JSON,
+				Description: "The category of the item.",
+				Hydrate:     getItemCreditCard,
+			},
+			{
 				Name:        "fields",
 				Type:        proto.ColumnType_JSON,
 				Description: "The category of the item.",
-				Hydrate:     getItem,
+				Hydrate:     getItemCreditCard,
 			},
 			{
 				Name:        "files",
 				Type:        proto.ColumnType_JSON,
 				Description: "The category of the item.",
-				Hydrate:     getItem,
-			},
-			{
-				Name:        "sections",
-				Type:        proto.ColumnType_JSON,
-				Description: "The category of the item.",
-				Hydrate:     getItem,
+				Hydrate:     getItemCreditCard,
 			},
 			{
 				Name:        "tags",
@@ -109,7 +145,17 @@ func tableOnepasswordItem(ctx context.Context) *plugin.Table {
 	}
 }
 
-func listItems(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (interface{}, error) {
+type ItemCreditCard struct {
+	Cardholder string
+	Type       string
+	Ccnum      string
+	Cvv        string
+	Expiry     string
+	ValidFrom  string
+	onepassword.Item
+}
+
+func listItemCreditCards(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (interface{}, error) {
 	vault := h.Item.(onepassword.Vault)
 	vault_id := d.EqualsQuals["vault_id"].GetStringValue()
 
@@ -120,20 +166,20 @@ func listItems(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) 
 
 	client, err := getClient(ctx, d)
 	if err != nil {
-		plugin.Logger(ctx).Error("onepassword_Item.listItems", "connection_error", err)
+		plugin.Logger(ctx).Error("onepassword_item_credit_card.listItemCreditCards", "connection_error", err)
 		return nil, err
 	}
-	plugin.Logger(ctx).Error("before api call")
+
 	items, err := client.GetItems(vault.ID)
 	if err != nil {
-		plugin.Logger(ctx).Error("onepassword_item.listItems", "api_error", err)
+		plugin.Logger(ctx).Error("onepassword_item_credit_card.listItemCreditCards", "api_error", err)
 		return nil, err
 	}
 
 	for _, item := range items {
-		plugin.Logger(ctx).Error("after api call", item.Title)
-		d.StreamListItem(ctx, item)
-
+		if item.Category == "CREDIT_CARD" {
+			d.StreamListItem(ctx, ItemCreditCard{"", "", "", "", "", "", item})
+		}
 		// Context can be cancelled due to manual cancellation or the limit has been hit
 		if d.RowsRemaining(ctx) == 0 {
 			return nil, nil
@@ -143,11 +189,11 @@ func listItems(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) 
 	return nil, nil
 }
 
-func getItem(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (interface{}, error) {
+func getItemCreditCard(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (interface{}, error) {
 	var id, vault_id string
 	if h.Item != nil {
-		id = h.Item.(onepassword.Item).ID
-		vault_id = h.Item.(onepassword.Item).Vault.ID
+		id = h.Item.(ItemCreditCard).Item.ID
+		vault_id = h.Item.(ItemCreditCard).Item.Vault.ID
 	} else {
 		id = d.EqualsQualString("id")
 		vault_id = d.EqualsQualString("vault_id")
@@ -169,6 +215,30 @@ func getItem(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (i
 		plugin.Logger(ctx).Error("onepassword_item.getItem", "api_error", err)
 		return nil, err
 	}
+	var cardholder, cctype, ccnum, cvv, expiry, valid_from string
+	if item.Category == "CREDIT_CARD" {
+		for _, field := range item.Fields {
+			if field.ID == "cardholder" {
+				cardholder = field.Value
+			}
+			if field.ID == "type" {
+				cctype = field.Value
+			}
+			if field.ID == "ccnum" {
+				ccnum = field.Value
+			}
+			if field.ID == "cvv" {
+				cvv = field.Value
+			}
+			if field.ID == "expiry" {
+				expiry = field.Value
+			}
+			if field.ID == "validFrom" {
+				valid_from = field.Value
+			}
+		}
+		return ItemCreditCard{cardholder, cctype, ccnum, cvv, expiry, valid_from, *item}, nil
+	}
 
-	return item, nil
+	return nil, nil
 }
