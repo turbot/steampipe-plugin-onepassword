@@ -32,6 +32,7 @@ func tableOnepasswordItemIdentity(ctx context.Context) *plugin.Table {
 				Name:        "id",
 				Type:        proto.ColumnType_STRING,
 				Description: "The ID of the Item.",
+				Transform:   transform.FromField("ID"),
 			},
 			{
 				Name:        "vault_id",

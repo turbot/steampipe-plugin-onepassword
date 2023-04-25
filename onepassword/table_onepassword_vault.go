@@ -24,6 +24,7 @@ func tableOnepasswordVault(ctx context.Context) *plugin.Table {
 				Name:        "id",
 				Type:        proto.ColumnType_STRING,
 				Description: "The ID of this vault.",
+				Transform:   transform.FromField("ID"),
 			},
 			{
 				Name:        "name",
