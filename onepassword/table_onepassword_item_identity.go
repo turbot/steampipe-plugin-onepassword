@@ -2,7 +2,6 @@ package onepassword
 
 import (
 	"context"
-	"strconv"
 
 	"github.com/1Password/connect-sdk-go/onepassword"
 	"github.com/turbot/steampipe-plugin-sdk/v5/grpc/proto"
@@ -170,7 +169,7 @@ type ItemIdentity struct {
 	Initial    string
 	Lastname   string
 	Gender     string
-	Birthdate  *int
+	Birthdate  string
 	Occupation string
 	Company    string
 	Department string
@@ -201,7 +200,7 @@ func listItemIdentities(ctx context.Context, d *plugin.QueryData, h *plugin.Hydr
 
 	for _, item := range items {
 		if item.Category == "IDENTITY" {
-			d.StreamListItem(ctx, ItemIdentity{"", "", "", "", nil, "", "", "", "", item})
+			d.StreamListItem(ctx, ItemIdentity{"", "", "", "", "", "", "", "", "", item})
 		}
 		// Context can be cancelled due to manual cancellation or the limit has been hit
 		if d.RowsRemaining(ctx) == 0 {
@@ -238,8 +237,7 @@ func getItemIdentity(ctx context.Context, d *plugin.QueryData, h *plugin.Hydrate
 		plugin.Logger(ctx).Error("onepassword_item.getItem", "api_error", err)
 		return nil, err
 	}
-	var firstname, initial, lastname, gender, occupation, company, department, jobtitle string
-	var birthdate int
+	var firstname, initial, lastname, birthdate, gender, occupation, company, department, jobtitle string
 	if item.Category == "IDENTITY" {
 		for _, field := range item.Fields {
 			if field.ID == "firstname" {
@@ -255,8 +253,7 @@ func getItemIdentity(ctx context.Context, d *plugin.QueryData, h *plugin.Hydrate
 				gender = field.Value
 			}
 			if field.ID == "birthdate" {
-				date, _ := strconv.Atoi(field.Value)
-				birthdate = date
+				birthdate = field.Value
 			}
 			if field.ID == "occupation" {
 				occupation = field.Value
@@ -271,7 +268,7 @@ func getItemIdentity(ctx context.Context, d *plugin.QueryData, h *plugin.Hydrate
 				jobtitle = field.Value
 			}
 		}
-		return ItemIdentity{firstname, initial, lastname, gender, &birthdate, occupation, company, department, jobtitle, *item}, nil
+		return ItemIdentity{firstname, initial, lastname, gender, birthdate, occupation, company, department, jobtitle, *item}, nil
 	}
 
 	return nil, nil
