@@ -54,26 +54,6 @@ func tableOnepasswordItem(ctx context.Context) *plugin.Table {
 				Type:        proto.ColumnType_STRING,
 				Description: "The category of the item.",
 			},
-
-			{
-				Name:        "sections",
-				Type:        proto.ColumnType_JSON,
-				Description: "The category of the item.",
-				Hydrate:     getItem,
-			},
-			{
-				Name:        "fields",
-				Type:        proto.ColumnType_JSON,
-				Description: "The category of the item.",
-				Hydrate:     getItem,
-			},
-			{
-				Name:        "files",
-				Type:        proto.ColumnType_JSON,
-				Description: "The category of the item.",
-				Hydrate:     getItem,
-			},
-
 			{
 				Name:        "last_edited_by",
 				Type:        proto.ColumnType_STRING,
@@ -88,6 +68,24 @@ func tableOnepasswordItem(ctx context.Context) *plugin.Table {
 				Name:        "updated_at",
 				Type:        proto.ColumnType_TIMESTAMP,
 				Description: "Item updated at.",
+			},
+			{
+				Name:        "fields",
+				Type:        proto.ColumnType_JSON,
+				Description: "The category of the item.",
+				Hydrate:     getItem,
+			},
+			{
+				Name:        "files",
+				Type:        proto.ColumnType_JSON,
+				Description: "The category of the item.",
+				Hydrate:     getItem,
+			},
+			{
+				Name:        "sections",
+				Type:        proto.ColumnType_JSON,
+				Description: "The category of the item.",
+				Hydrate:     getItem,
 			},
 			{
 				Name:        "tags",
@@ -144,11 +142,17 @@ func listItems(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) 
 	return nil, nil
 }
 
-func getItem(ctx context.Context, d *plugin.QueryData, _ *plugin.HydrateData) (interface{}, error) {
-	id := d.EqualsQuals["id"].GetStringValue()
-	vault_id := d.EqualsQuals["vault_id"].GetStringValue()
+func getItem(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (interface{}, error) {
+	var id, vault_id string
+	if h.Item != nil {
+		id = h.Item.(onepassword.Item).ID
+		vault_id = h.Item.(onepassword.Item).Vault.ID
+	} else {
+		id = d.EqualsQualString("id")
+		vault_id = d.EqualsQualString("vault_id")
+	}
 
-	// Check if id is empty
+	// Check if id or vault_id is empty
 	if id == "" || vault_id == "" {
 		return nil, nil
 	}
