@@ -19,10 +19,11 @@ func Plugin(ctx context.Context) *plugin.Plugin {
 		// 	ShouldIgnoreErrorFunc: shouldIgnoreErrors([]string{"404"}),
 		// },
 		TableMap: map[string]*plugin.Table{
-			"onepassword_vault":      tableOnepasswordVault(ctx),
-			"onepassword_item":       tableOnepasswordItem(ctx),
-			"onepassword_item_file":  tableOnepasswordItemFile(ctx),
-			"onepassword_item_login": tableOnepasswordItemLogin(ctx),
+			"onepassword_vault":               tableOnepasswordVault(ctx),
+			"onepassword_item":                tableOnepasswordItem(ctx),
+			"onepassword_item_file":           tableOnepasswordItemFile(ctx),
+			"onepassword_item_login":          tableOnepasswordItemLogin(ctx),
+			"onepassword_item_api_credential": tableOnepasswordItemAPICredential(ctx),
 		},
 	}
 	return p
