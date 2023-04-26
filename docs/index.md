@@ -6,7 +6,7 @@ brand_color: ""
 display_name: "1Password"
 short_name: "1password"
 description: "Steampipe plugin to query vaults, items, files and more from 1Password."
-og_description: "Query Sentry with SQL! Open source CLI. No DB required."
+og_description: "Query 1Password with SQL! Open source CLI. No DB required."
 og_image: "/images/plugins/turbot/1password-social-graphic.png"
 ---
 
