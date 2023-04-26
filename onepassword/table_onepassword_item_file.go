@@ -111,7 +111,7 @@ func listItemFiles(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateDa
 
 	files, err := client.GetFiles(item_id, vault.ID)
 	if err != nil {
-		// check if it is not found err
+		// handle not found err
 		if isNotFoundError(err) {
 			return nil, nil
 		}
