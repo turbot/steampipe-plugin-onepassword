@@ -1,6 +1,6 @@
 ---
 organization: Turbot
-category: ["software development"]
+category: ["security"]
 icon_url: "/images/plugins/turbot/1password.svg"
 brand_color: ""
 display_name: "1Password"
@@ -50,15 +50,15 @@ from
 Download and install the latest 1Password plugin:
 
 ```sh
-steampipe plugin install 1password
+steampipe plugin install onepassword
 ```
 
 ### Credentials
 
 | Item        | Description                                                                                                                                                                                                                                                                                                      |
 | ----------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Credentials | 1Password requires an [Access Token](https://developer.1password.com/docs/connect/manage-secrets-automation#issue-revoke-or-rename-an-access-token) or [Access Token](https://developer.1password.com/docs/connect/manage-secrets-automation#issue-revoke-or-rename-an-access-token) and a url for all requests. |
-| Permissions | The permission scope of access tokens is limited to the vaults that the admin provides access to..                                                                                                                                                                                                               |
+| Credentials | 1Password requires an [Access Token](https://developer.1password.com/docs/connect/manage-secrets-automation#issue-revoke-or-rename-an-access-token) or [Access Token](https://developer.1password.com/docs/connect/manage-secrets-automation#issue-revoke-or-rename-an-access-token) and a URL for all requests. |
+| Permissions | The permission scope of access tokens is limited to the vaults that the admin provides access to.                                                                                                                                                                                                                |
 | Radius      | Each connection represents a single 1Password Installation.                                                                                                                                                                                                                                                      |
 | Resolution  | 1. Credentials explicitly set in a steampipe config file (`~/.steampipe/config/onepassword.spc`)<br />2. Credentials specified in environment variables, e.g., `OP_CONNECT_TOKEN`, `OP_CONNECT_HOST`.                                                                                                            |
 
@@ -76,7 +76,7 @@ connection "onepassword" {
   # Can also be set with the OP_CONNECT_TOKEN environment variable.
   # token = "eyJhbGciOiJFUzI1NiIsImtpZCI6InFuN3JwcmZhbnJqZ2V1bWU2eTNidGpjdHN5IiwidHlwIjoiSldUIn0.eyIxcGFzc3dvcmQuY29tL2F1dWlkIjoiVEpGVzVZTlRJSkMzSkNXRFgzQ0dWTUpCSDQiLCIxcGFzc3dvcmQuY29tL3Rva2VuIjoib2tnZGZJWHpEaDhWWkNkRHVNRjZNSUplRUlwN3ZrYUQiLCIxcGFzc3dvcmQuY29tL2Z0cyI6WyJ2YXVsdGFjY2VzcyJdLCIxcGFzc3dvcmQuY29tL3Z0cyI6W3sidSI6ImZwZDR1dW00bHJicTMycG8ybXR2ZGo0c3hpI"
 
-  # `url` (optional) - The host URL.
+  # `url` (optional) - The host URL. Set to default http://localhost:8080
   # Can also be set with the OP_CONNECT_HOST environment variable.
   # url = "http://localhost:8080"
 }

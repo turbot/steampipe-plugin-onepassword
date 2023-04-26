@@ -14,7 +14,7 @@ Use SQL to query vaults, items, files and more from 1Password.
 Download and install the latest 1Password plugin:
 
 ```bash
-steampipe plugin install 1password
+steampipe plugin install onepassword
 ```
 
 Configure your [credentials](https://hub.steampipe.io/plugins/turbot/1password#credentials) and [config file](https://hub.steampipe.io/plugins/turbot/1password#configuration).
