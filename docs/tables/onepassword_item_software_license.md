@@ -35,7 +35,7 @@ where
   and v.name = 'my-creds';
 ```
 
-### Show software license that contain a specific tag
+### Show software licenses that contain a specific tag
 
 ```sql
 select
@@ -52,7 +52,7 @@ where
   tags @ > '["amazon-use"]';
 ```
 
-### List favorite credit cards
+### List favorite software licenses
 
 ```sql
 select
