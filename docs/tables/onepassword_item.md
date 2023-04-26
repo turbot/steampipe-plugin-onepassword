@@ -16,12 +16,12 @@ select
   created_at,
   updated_at,
   last_edited_by,
-  tags 
+  tags
 from
   onepassword_item;
 ```
 
-### List of items updated in the last 30 days
+### List items that have been updated in the last 30 days
 
 ```sql
 select
@@ -31,28 +31,14 @@ select
   created_at,
   updated_at,
   last_edited_by,
-  tags 
+  tags
 from
-  onepassword_item 
+  onepassword_item
 where
   updated_at > now() - interval '30 day';
 ```
 
-### Count of item categories in descending order
-
-```sql
-select
-  category,
-  count(category) 
-from
-  onepassword_item 
-group by
-  category 
-order by
-  count desc;
-```
-
-## List of items with a specific tag (eg: production)
+## List items with production tag
 
 ```sql
 SELECT
@@ -60,22 +46,22 @@ SELECT
   title,
   category,
   version,
-  tags 
+  tags
 FROM
-  onepassword_item 
+  onepassword_item
 WHERE
   tags @ > '["production"]';
 ```
 
-## List the fields of an item with a specific section (eg: Metadata)
+## List the fields of all items with a specific section
 
 ```sql
 select
   title,
-  jsonb_pretty(f) 
+  jsonb_pretty(f) as field
 from
   onepassword_item,
-  jsonb_array_elements(fields) as f 
+  jsonb_array_elements(fields) as f
 where
   f -> 'section' ->> 'label' = 'Metadata';
-  ```
+```
