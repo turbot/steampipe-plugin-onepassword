@@ -112,7 +112,7 @@ func tableOnepasswordItemMedicalRecord(ctx context.Context) *plugin.Table {
 			{
 				Name:        "updated_at",
 				Type:        proto.ColumnType_TIMESTAMP,
-				Description: "Date and time when the vault or its contents were last changed.",
+				Description: "Date and time when the item was last changed.",
 			},
 			{
 				Name:        "version",
@@ -240,26 +240,19 @@ func getItemMedicalRecord(ctx context.Context, d *plugin.QueryData, h *plugin.Hy
 		for _, field := range item.Fields {
 			if field.ID == "date" {
 				date = field.Value
-			}
-			if field.ID == "location" {
+			} else if field.ID == "location" {
 				location = field.Value
-			}
-			if field.ID == "healthcareprofessional" {
+			} else if field.ID == "healthcareprofessional" {
 				healthcareprofessional = field.Value
-			}
-			if field.ID == "patient" {
+			} else if field.ID == "patient" {
 				patient = field.Value
-			}
-			if field.ID == "reason" {
+			} else if field.ID == "reason" {
 				reason = field.Value
-			}
-			if field.ID == "medication" {
+			} else if field.ID == "medication" {
 				medication = field.Value
-			}
-			if field.ID == "dosage" {
+			} else if field.ID == "dosage" {
 				dosage = field.Value
-			}
-			if field.ID == "notes" && field.Label == "medication notes" {
+			} else if field.ID == "notes" && field.Label == "medication notes" {
 				notes = field.Value
 			}
 		}

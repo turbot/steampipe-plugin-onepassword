@@ -69,7 +69,7 @@ func tableOnepasswordItemPassword(ctx context.Context) *plugin.Table {
 			{
 				Name:        "updated_at",
 				Type:        proto.ColumnType_TIMESTAMP,
-				Description: "Date and time when the vault or its contents were last changed.",
+				Description: "Date and time when the item was last changed.",
 			},
 			{
 				Name:        "version",
@@ -174,13 +174,13 @@ func getItemPassword(ctx context.Context, d *plugin.QueryData, h *plugin.Hydrate
 
 	client, err := getClient(ctx, d)
 	if err != nil {
-		plugin.Logger(ctx).Error("onepassword_item.getItem", "connection_error", err)
+		plugin.Logger(ctx).Error("onepassword_item_password.getItemPassword", "connection_error", err)
 		return nil, err
 	}
 
 	item, err := client.GetItem(id, vault_id)
 	if err != nil {
-		plugin.Logger(ctx).Error("onepassword_item.getItem", "api_error", err)
+		plugin.Logger(ctx).Error("onepassword_item_password.getItemPassword", "api_error", err)
 		return nil, err
 	}
 

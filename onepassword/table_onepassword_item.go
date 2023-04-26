@@ -63,7 +63,7 @@ func tableOnepasswordItem(ctx context.Context) *plugin.Table {
 			{
 				Name:        "updated_at",
 				Type:        proto.ColumnType_TIMESTAMP,
-				Description: "Date and time when the vault or its contents were last changed.",
+				Description: "Date and time when the item was last changed.",
 			},
 			{
 				Name:        "version",

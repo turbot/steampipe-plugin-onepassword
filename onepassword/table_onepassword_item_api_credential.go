@@ -75,7 +75,7 @@ func tableOnepasswordItemAPICredential(ctx context.Context) *plugin.Table {
 			{
 				Name:        "updated_at",
 				Type:        proto.ColumnType_TIMESTAMP,
-				Description: "Date and time when the vault or its contents were last changed.",
+				Description: "Date and time when the item was last changed.",
 			},
 			{
 				Name:        "version",
@@ -197,8 +197,7 @@ func getItemAPICredential(ctx context.Context, d *plugin.QueryData, h *plugin.Hy
 		for _, field := range item.Fields {
 			if field.ID == "username" {
 				username = field.Value
-			}
-			if field.ID == "credential" {
+			} else if field.ID == "credential" {
 				credential = field.Value
 			}
 		}

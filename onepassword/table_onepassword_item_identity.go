@@ -118,7 +118,7 @@ func tableOnepasswordItemIdentity(ctx context.Context) *plugin.Table {
 			{
 				Name:        "updated_at",
 				Type:        proto.ColumnType_TIMESTAMP,
-				Description: "Date and time when the vault or its contents were last changed.",
+				Description: "Date and time when the item was last changed.",
 			},
 			{
 				Name:        "version",
@@ -231,13 +231,13 @@ func getItemIdentity(ctx context.Context, d *plugin.QueryData, h *plugin.Hydrate
 
 	client, err := getClient(ctx, d)
 	if err != nil {
-		plugin.Logger(ctx).Error("onepassword_item.getItem", "connection_error", err)
+		plugin.Logger(ctx).Error("onepassword_item_identity.getItemIdentity", "connection_error", err)
 		return nil, err
 	}
 
 	item, err := client.GetItem(id, vault_id)
 	if err != nil {
-		plugin.Logger(ctx).Error("onepassword_item.getItem", "api_error", err)
+		plugin.Logger(ctx).Error("onepassword_item_identity.getItemIdentity", "api_error", err)
 		return nil, err
 	}
 
@@ -247,29 +247,21 @@ func getItemIdentity(ctx context.Context, d *plugin.QueryData, h *plugin.Hydrate
 		for _, field := range item.Fields {
 			if field.ID == "firstname" {
 				firstname = field.Value
-			}
-			if field.ID == "initial" {
+			} else if field.ID == "initial" {
 				initial = field.Value
-			}
-			if field.ID == "lastname" {
+			} else if field.ID == "lastname" {
 				lastname = field.Value
-			}
-			if field.ID == "gender" {
+			} else if field.ID == "gender" {
 				gender = field.Value
-			}
-			if field.ID == "birthdate" {
+			} else if field.ID == "birthdate" {
 				birthdate = field.Value
-			}
-			if field.ID == "occupation" {
+			} else if field.ID == "occupation" {
 				occupation = field.Value
-			}
-			if field.ID == "company" {
+			} else if field.ID == "company" {
 				company = field.Value
-			}
-			if field.ID == "department" {
+			} else if field.ID == "department" {
 				department = field.Value
-			}
-			if field.ID == "jobtitle" {
+			} else if field.ID == "jobtitle" {
 				jobtitle = field.Value
 			}
 		}

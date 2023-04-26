@@ -87,7 +87,7 @@ func tableOnepasswordItemCreditCard(ctx context.Context) *plugin.Table {
 			{
 				Name:        "updated_at",
 				Type:        proto.ColumnType_TIMESTAMP,
-				Description: "Date and time when the vault or its contents were last changed.",
+				Description: "Date and time when the item was last changed.",
 			},
 			{
 				Name:        "valid_from",
@@ -209,13 +209,13 @@ func getItemCreditCard(ctx context.Context, d *plugin.QueryData, h *plugin.Hydra
 
 	client, err := getClient(ctx, d)
 	if err != nil {
-		plugin.Logger(ctx).Error("onepassword_item.getItem", "connection_error", err)
+		plugin.Logger(ctx).Error("onepassword_item_credit_card.getItemCreditCard", "connection_error", err)
 		return nil, err
 	}
 
 	item, err := client.GetItem(id, vault_id)
 	if err != nil {
-		plugin.Logger(ctx).Error("onepassword_item.getItem", "api_error", err)
+		plugin.Logger(ctx).Error("onepassword_item_credit_card.getItemCreditCard", "api_error", err)
 		return nil, err
 	}
 
@@ -225,20 +225,15 @@ func getItemCreditCard(ctx context.Context, d *plugin.QueryData, h *plugin.Hydra
 		for _, field := range item.Fields {
 			if field.ID == "cardholder" {
 				cardholder = field.Value
-			}
-			if field.ID == "type" {
+			} else if field.ID == "type" {
 				cctype = field.Value
-			}
-			if field.ID == "ccnum" {
+			} else if field.ID == "ccnum" {
 				ccnum = field.Value
-			}
-			if field.ID == "cvv" {
+			} else if field.ID == "cvv" {
 				cvv = field.Value
-			}
-			if field.ID == "expiry" {
+			} else if field.ID == "expiry" {
 				expiry = field.Value
-			}
-			if field.ID == "validFrom" {
+			} else if field.ID == "validFrom" {
 				valid_from = field.Value
 			}
 		}

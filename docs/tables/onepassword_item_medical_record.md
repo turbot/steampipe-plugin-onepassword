@@ -42,7 +42,7 @@ where
   and v.name = 'my-creds';
 ```
 
-### Show medical records that have been tagged as "important"
+### Show medical records that have been tagged as `important`
 
 ```sql
 select
