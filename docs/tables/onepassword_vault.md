@@ -4,7 +4,7 @@ Every item you save in 1Password is stored in a vault. You can use vaults to org
 
 ## Examples
 
-### Basic vault info
+### Basic info
 
 ```sql
 select
@@ -13,12 +13,12 @@ select
   created_at,
   description,
   type,
-  updated_at 
+  updated_at
 from
   onepassword_vault;
 ```
 
-### Vaults created in the last 30 days
+### List vaults created in the last 30 days
 
 ```sql
 select
@@ -27,14 +27,14 @@ select
   created_at,
   description,
   type,
-  updated_at 
+  updated_at
 from
-  onepassword_vault 
+  onepassword_vault
 where
-  created_at > current_timestamp - interval '30 day';
+  created_at > now() - interval '30 day';
 ```
 
-### Vaults with zero items saved
+### Show vaults with zero items
 
 ```sql
 select
@@ -44,9 +44,26 @@ select
   items,
   description,
   type,
-  updated_at 
+  updated_at
 from
-  onepassword_vault 
+  onepassword_vault
 where
-  items = 0 ;
+  items = 0;
+```
+
+### Show personal vaults
+
+```sql
+select
+  id,
+  name,
+  created_at,
+  items,
+  description,
+  type,
+  updated_at
+from
+  onepassword_vault
+where
+  type = 'PERSONAL';
 ```
