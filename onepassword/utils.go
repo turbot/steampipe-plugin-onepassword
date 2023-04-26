@@ -3,6 +3,7 @@ package onepassword
 import (
 	"context"
 	"strconv"
+	"strings"
 	"time"
 
 	"github.com/turbot/steampipe-plugin-sdk/v5/plugin/transform"
@@ -17,4 +18,8 @@ func convertTimestamp(_ context.Context, d *transform.TransformData) (interface{
 		return unixTimestamp, nil
 	}
 	return nil, nil
+}
+
+func isNotFoundError(err error) bool {
+	return strings.Contains(err.Error(), "not found")
 }

@@ -105,25 +105,25 @@ func tableOnepasswordItemIdentity(ctx context.Context) *plugin.Table {
 				Hydrate:     getItemIdentity,
 			},
 			{
+				Name:        "last_edited_by",
+				Type:        proto.ColumnType_STRING,
+				Description: "UUID of the user that last edited the item.",
+			},
+			{
 				Name:        "occupation",
 				Type:        proto.ColumnType_STRING,
 				Description: "The occupation of the identity.",
 				Hydrate:     getItemIdentity,
 			},
 			{
-				Name:        "version",
-				Type:        proto.ColumnType_INT,
-				Description: "The version of the item.",
-			},
-			{
-				Name:        "last_edited_by",
-				Type:        proto.ColumnType_STRING,
-				Description: "UUID of the user that last edited the item.",
-			},
-			{
 				Name:        "updated_at",
 				Type:        proto.ColumnType_TIMESTAMP,
 				Description: "Date and time when the vault or its contents were last changed.",
+			},
+			{
+				Name:        "version",
+				Type:        proto.ColumnType_INT,
+				Description: "The version of the item.",
 			},
 			{
 				Name:        "sections",
