@@ -11,12 +11,10 @@ select
   id,
   title,
   password,
-  jsonb_pretty(u -> 'href') as website,
   created_at,
   tags
 from
-  onepassword_item_password,
-  jsonb_array_elements(urls) as u;
+  onepassword_item_password;
 ```
 
 ### List passwords of a particular vault
@@ -26,12 +24,10 @@ select
   p.id,
   p.title,
   password,
-  jsonb_pretty(u -> 'href') as website,
   p.created_at,
   p.tags
 from
   onepassword_item_password as p,
-  jsonb_array_elements(p.urls) as u,
   onepassword_vault as v
 where
   p.vault_id = v.id
@@ -53,43 +49,43 @@ where
   tags @ > '["amazon-use"]';
 ```
 
-### List items with password less than 8 characters
+### List passwords that are less than 8 characters
 
 ```sql
 select
   id,
   title,
   password,
-  jsonb_pretty(u -> 'href') as website,
   created_at,
   tags
 from
-  onepassword_item_password,
-  jsonb_array_elements(urls) as u where LENGTH(password) < 8;
+  onepassword_item_password
+where
+  length(password) < 8;
 ```
 
-### List of passwords that are not unique
+### List passwords that are not unique
 
 ```sql
-SELECT
+select
   p2.id,
   p2.vault_id,
   p2.title,
-  p1.password 
-FROM
+  p1.password
+from
   (
-    SELECT
+    select
       password,
-      COUNT(*) as count 
-    FROM
-      onepassword_item_password 
-    GROUP BY
-      password 
-    HAVING
-      COUNT(*) > 1
+      count(*) as count
+    from
+      onepassword_item_password
+    group by
+      password
+    having
+      count(*) > 1
   )
-  p1 
-  JOIN
+  p1
+  join
     onepassword_item_password p2
-    ON p1.password = p2.password;
+    on p1.password = p2.password;
 ```
