@@ -1,6 +1,6 @@
-# Table: onepassword_item_password
+# Table: onepassword_item_login
 
-Password items include a field for a password. If you enter a username when creating a Password item, it will automatically convert to a Login item.
+Login items include fields like username, password, website, and one-time password. This category is used for saving or filling logins.
 
 ## Examples
 
@@ -12,9 +12,10 @@ select
   title,
   password,
   created_at,
-  tags
+  updated_at,
+  tags 
 from
-  onepassword_item_password;
+  onepassword_item_login
 ```
 
 ### List passwords along with website details
@@ -28,7 +29,7 @@ select
   created_at,
   tags
 from
-  onepassword_item_password,
+  onepassword_item_login,
   jsonb_array_elements(urls) as u;
 ```
 
@@ -42,7 +43,7 @@ select
   p.created_at,
   p.tags
 from
-  onepassword_item_password as p,
+  onepassword_item_login as p,
   onepassword_vault as v
 where
   p.vault_id = v.id
@@ -59,12 +60,12 @@ select
   created_at,
   tags
 from
-  onepassword_item_password
+  onepassword_item_login
 where
   tags @> '["amazon-use"]';
 ```
 
-### List passwords that are less than 8 characters
+### List items with password less than 8 characters
 
 ```sql
 select
@@ -74,33 +75,31 @@ select
   created_at,
   tags
 from
-  onepassword_item_password
-where
-  length(password) < 8;
+  onepassword_item_login where LENGTH(password) < 8;
 ```
 
-### List passwords that are not unique
+### List of passwords that are not unique
 
 ```sql
 select
   p2.id,
   p2.vault_id,
   p2.title,
-  p1.password
+  p1.password 
 from
   (
     select
       password,
-      count(*) as count
+      count(*) as count 
     from
-      onepassword_item_password
+      onepassword_item_login 
     group by
-      password
+      password 
     having
-      count(*) > 1
+      count(*) > 1 
   )
-  p1
+  p1 
   join
-    onepassword_item_password p2
+    onepassword_item_login p2 
     on p1.password = p2.password;
 ```
