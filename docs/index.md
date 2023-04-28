@@ -2,7 +2,7 @@
 organization: Turbot
 category: ["security"]
 icon_url: "/images/plugins/turbot/1password.svg"
-brand_color: ""
+brand_color: "#1A8CFF"
 display_name: "1Password"
 short_name: "1password"
 description: "Steampipe plugin to query vaults, items, files and more from 1Password."
