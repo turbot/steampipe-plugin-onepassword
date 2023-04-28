@@ -60,7 +60,7 @@ func tableOnepasswordItemMedicalRecord(ctx context.Context) *plugin.Table {
 				Type:        proto.ColumnType_TIMESTAMP,
 				Description: "The medical record date.",
 				Hydrate:     getItemMedicalRecord,
-				Transform:   transform.FromField("Date").Transform(convertTimestamp),
+				Transform:   transform.FromField("Date").Transform(transform.UnixToTimestamp),
 			},
 			{
 				Name:        "dosage",

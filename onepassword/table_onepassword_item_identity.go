@@ -63,7 +63,7 @@ func tableOnepasswordItemIdentity(ctx context.Context) *plugin.Table {
 				Type:        proto.ColumnType_TIMESTAMP,
 				Description: "The birth date of the identity.",
 				Hydrate:     getItemIdentity,
-				Transform:   transform.FromField("BirthDate").Transform(convertTimestamp),
+				Transform:   transform.FromField("BirthDate").Transform(transform.UnixToTimestamp),
 			},
 			{
 				Name:        "category",

@@ -4,13 +4,10 @@ import (
 	"context"
 	"errors"
 	"os"
-	"strconv"
 	"strings"
-	"time"
 
 	"github.com/1Password/connect-sdk-go/connect"
 	"github.com/turbot/steampipe-plugin-sdk/v5/plugin"
-	"github.com/turbot/steampipe-plugin-sdk/v5/plugin/transform"
 )
 
 func getClient(ctx context.Context, d *plugin.QueryData) (connect.Client, error) {
@@ -35,17 +32,6 @@ func getClient(ctx context.Context, d *plugin.QueryData) (connect.Client, error)
 	}
 
 	return nil, errors.New("'token' must be set in the connection configuration. Edit your connection configuration file and then restart Steampipe.")
-}
-
-func convertTimestamp(_ context.Context, d *transform.TransformData) (interface{}, error) {
-	epochTime := d.Value.(string)
-
-	if epochTime != "" {
-		unixtime, _ := strconv.Atoi(epochTime)
-		unixTimestamp := time.Unix(int64(unixtime), 0)
-		return unixTimestamp, nil
-	}
-	return nil, nil
 }
 
 func isNotFoundError(err error) bool {
