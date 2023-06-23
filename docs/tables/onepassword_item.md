@@ -41,16 +41,16 @@ where
 ## List items with production tag
 
 ```sql
-SELECT
+select
   id,
   title,
   category,
   version,
   tags
-FROM
+from
   onepassword_item
-WHERE
-  tags @ > '["production"]';
+where
+  tags @> '["production"]';
 ```
 
 ## List the fields of all items with a specific section

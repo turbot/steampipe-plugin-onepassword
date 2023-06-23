@@ -67,3 +67,19 @@ from
 where
   updated_at >= now() - interval '1 month';
 ```
+
+### List API credentials that are marked as favourite
+
+```sql
+select
+  id,
+  title,
+  username,
+  credential,
+  created_at,
+  favorite
+from
+  onepassword_item_api_credential
+where
+  favorite;
+```

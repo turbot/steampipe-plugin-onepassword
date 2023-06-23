@@ -9,6 +9,8 @@ import (
 	"github.com/turbot/steampipe-plugin-sdk/v5/plugin/transform"
 )
 
+//// TABLE DEFINITION
+
 func tableOnepasswordItem(ctx context.Context) *plugin.Table {
 	return &plugin.Table{
 		Name:        "onepassword_item",
@@ -71,6 +73,11 @@ func tableOnepasswordItem(ctx context.Context) *plugin.Table {
 				Description: "The version of the item.",
 			},
 			{
+				Name:        "trashed",
+				Type:        proto.ColumnType_BOOL,
+				Description: "Checks if the item is trashed.",
+			},
+			{
 				Name:        "fields",
 				Type:        proto.ColumnType_JSON,
 				Description: "The fields of the item.",
@@ -110,6 +117,8 @@ func tableOnepasswordItem(ctx context.Context) *plugin.Table {
 	}
 }
 
+/// LIST FUNCTION
+
 func listItems(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (interface{}, error) {
 	vault := h.Item.(onepassword.Vault)
 	vault_id := d.EqualsQualString("vault_id")
@@ -141,6 +150,8 @@ func listItems(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) 
 
 	return nil, nil
 }
+
+/// HYDRATE FUNCTION
 
 func getItem(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (interface{}, error) {
 	var id, vault_id string

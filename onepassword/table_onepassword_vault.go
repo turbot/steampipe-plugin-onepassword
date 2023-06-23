@@ -8,6 +8,8 @@ import (
 	"github.com/turbot/steampipe-plugin-sdk/v5/plugin/transform"
 )
 
+//// FUNCTION DEFINITION
+
 func tableOnepasswordVault(ctx context.Context) *plugin.Table {
 	return &plugin.Table{
 		Name:        "onepassword_vault",
@@ -81,6 +83,8 @@ func tableOnepasswordVault(ctx context.Context) *plugin.Table {
 	}
 }
 
+/// LIST FUNCTION
+
 func listVaults(ctx context.Context, d *plugin.QueryData, _ *plugin.HydrateData) (interface{}, error) {
 	client, err := getClient(ctx, d)
 	if err != nil {
@@ -90,7 +94,7 @@ func listVaults(ctx context.Context, d *plugin.QueryData, _ *plugin.HydrateData)
 
 	vaults, err := client.GetVaults()
 	if err != nil {
-		plugin.Logger(ctx).Error("onepassword_vault.listVaults", "query_error", err)
+		plugin.Logger(ctx).Error("onepassword_vault.listVaults", "api_error", err)
 		return nil, err
 	}
 
@@ -105,6 +109,8 @@ func listVaults(ctx context.Context, d *plugin.QueryData, _ *plugin.HydrateData)
 
 	return nil, nil
 }
+
+/// HYDRATE FUNCTION
 
 func getVault(ctx context.Context, d *plugin.QueryData, _ *plugin.HydrateData) (interface{}, error) {
 	id := d.EqualsQualString("id")

@@ -68,7 +68,7 @@ where
   tags @> '["amazon-use"]';
 ```
 
-### List logins with password less than 8 characters
+### List logins with password length less than 8 characters
 
 ```sql
 select

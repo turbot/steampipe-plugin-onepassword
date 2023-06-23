@@ -9,6 +9,8 @@ import (
 	"github.com/turbot/steampipe-plugin-sdk/v5/plugin/transform"
 )
 
+///TABLE DEFINITION
+
 func tableOnepasswordItemFile(ctx context.Context) *plugin.Table {
 	return &plugin.Table{
 		Name:        "onepassword_item_file",
@@ -93,6 +95,8 @@ type ItemFile struct {
 	onepassword.File
 }
 
+/// LIST FUNCTION
+
 func listItemFiles(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (interface{}, error) {
 	item_id := d.EqualsQualString("item_id")
 	vault := h.Item.(onepassword.Vault)
@@ -130,6 +134,8 @@ func listItemFiles(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateDa
 
 	return nil, nil
 }
+
+/// HYDRATE FUNCTION
 
 func getItemFile(ctx context.Context, d *plugin.QueryData, _ *plugin.HydrateData) (interface{}, error) {
 	id := d.EqualsQualString("id")

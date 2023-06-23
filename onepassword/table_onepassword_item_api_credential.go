@@ -9,6 +9,8 @@ import (
 	"github.com/turbot/steampipe-plugin-sdk/v5/plugin/transform"
 )
 
+//// TABLE DEFINITION
+
 func tableOnepasswordItemAPICredential(ctx context.Context) *plugin.Table {
 	return &plugin.Table{
 		Name:        "onepassword_item_api_credential",
@@ -83,6 +85,11 @@ func tableOnepasswordItemAPICredential(ctx context.Context) *plugin.Table {
 				Description: "The version of the item.",
 			},
 			{
+				Name:        "trashed",
+				Type:        proto.ColumnType_BOOL,
+				Description: "Checks if the item is trashed.",
+			},
+			{
 				Name:        "sections",
 				Type:        proto.ColumnType_JSON,
 				Description: "The sections of the item.",
@@ -128,6 +135,8 @@ type ItemAPICrdential struct {
 	onepassword.Item
 }
 
+/// LIST FUNCTION
+
 func listItemAPICredentials(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (interface{}, error) {
 	vault := h.Item.(onepassword.Vault)
 	vault_id := d.EqualsQualString("vault_id")
@@ -163,6 +172,8 @@ func listItemAPICredentials(ctx context.Context, d *plugin.QueryData, h *plugin.
 
 	return nil, nil
 }
+
+/// HYDRATE FUNCTIONS
 
 func getItemAPICredential(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (interface{}, error) {
 	var id, vault_id string

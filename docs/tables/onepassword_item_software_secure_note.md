@@ -15,7 +15,7 @@ select
   notes_plain,
   tags,
   updated_at,
-  version 
+  version
 from
   onepassword_item_secure_note;
 ```
@@ -29,12 +29,12 @@ select
   notes_plain,
   s.created_at,
   s.updated_at,
-  favorite 
+  favorite
 from
   onepassword_item_secure_note as s,
-  onepassword_vault as v 
+  onepassword_vault as v
 where
-  s.vault_id = v.id 
+  s.vault_id = v.id
   and v.name = 'my-creds';
 ```
 
@@ -49,14 +49,14 @@ select
   notes_plain,
   tags,
   updated_at,
-  version 
+  version
 from
-  onepassword_item_secure_note 
+  onepassword_item_secure_note
 where
   tags @> '["amazon-use"]';
 ```
 
-### List favorite secure notes
+### List secure notes that are marked as favourite
 
 ```sql
 select
@@ -67,9 +67,9 @@ select
   notes_plain,
   tags,
   updated_at,
-  version 
+  version
 from
-  onepassword_item_secure_note 
+  onepassword_item_secure_note
 where
   favorite;
 ```

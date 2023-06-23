@@ -49,10 +49,10 @@ select
 from
   onepassword_item_software_license
 where
-  tags @ > '["amazon-use"]';
+  tags @> '["amazon-use"]';
 ```
 
-### List favorite software licenses
+### List software licenses that are marked as favourite
 
 ```sql
 select

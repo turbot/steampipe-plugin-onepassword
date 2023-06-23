@@ -64,7 +64,7 @@ where
   tags @> '["amazon-use"]';
 ```
 
-### List passwords that are less than 8 characters
+### List passwords that are less than 8 characters in length
 
 ```sql
 select
@@ -100,7 +100,5 @@ from
       count(*) > 1
   )
   p1
-  join
-    onepassword_item_password p2
-    on p1.password = p2.password;
+  join onepassword_item_password p2 on p1.password = p2.password;
 ```

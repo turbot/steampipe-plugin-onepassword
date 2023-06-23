@@ -31,7 +31,7 @@ select
 from
   onepassword_vault
 where
-  created_at > now() - interval '30 day';
+  created_at >= now() - interval '30 day';
 ```
 
 ### Show vaults with zero items
