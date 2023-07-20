@@ -64,9 +64,10 @@ from
 +----------------------------+---------------------------------------------+----------------------------+----------+------------------+---------------------------+
 | id                         | title                                       | vault_id                   | favorite | category         | created_at                |
 +----------------------------+---------------------------------------------+----------------------------+----------+------------------+---------------------------+
-| kvmaoszyhzbvze6g5t6vr6q2a | steampipe-test Access Token: steampipe-test | wygy6zfmgzdlzckgturaltkma | false    | API_CREDENTIAL   | 2022-10-11T20:36:34+05:30 |
-| ys6wwudn2jchffycnxvarun7y | Secure Note                                 | wygy6zfmgzdlzckgturaltkma | false    | SECURE_NOTE      | 2023-04-24T15:15:56+05:30 |
-| jskefwj3k5nefswdw4fopv4ca | API Credential                              | wygy6zfmgzdlzckgturaltkma | false    | API_CREDENTIAL   | 2023-04-24T14:51:08+05:30 |
+| kvmaoszyhzbvze6g5tvr6qg2a  | steampipe-test Access Token: steampipe-test | wygy6zfmgzdlzckgruraltkma | false     | API_CREDENTIAL   | 2022-10-11T20:36:34+05:30 |
+| ys6wwudn2jchffycnvaruun7y  | Secure Note                                 | wygy6zfmgzdlzckgturaltkma | false     | SECURE_NOTE      | 2023-04-24T15:15:56+05:30 |
+| jskefwj3k5nefswdwfopxv4ca  | API Credential                              | wygy6zfmgzdlzckgturaltkma | false     | API_CREDENTIAL   | 2023-04-24T14:51:08+05:30 |
++----------------------------+---------------------------------------------+----------------------------+----------+------------------+---------------------------+
 ```
 
 ## Developing

@@ -34,9 +34,10 @@ from
 +----------------------------+---------------------------------------------+----------------------------+----------+------------------+---------------------------+
 | id                         | title                                       | vault_id                   | favorite | category         | created_at                |
 +----------------------------+---------------------------------------------+----------------------------+----------+------------------+---------------------------+
-| kvmaoszyhzbvze6g5tvr6qg2a | steampipe-test Access Token: steampipe-test | wygy6zfmgzdlzckgruraltkma | false    | API_CREDENTIAL   | 2022-10-11T20:36:34+05:30 |
-| ys6wwudn2jchffycnvaruun7y | Secure Note                                 | wygy6zfmgzdlzckgturaltkma | false    | SECURE_NOTE      | 2023-04-24T15:15:56+05:30 |
-| jskefwj3k5nefswdwfopxv4ca | API Credential                              | wygy6zfmgzdlzckgturaltkma | false    | API_CREDENTIAL   | 2023-04-24T14:51:08+05:30 |
+| kvmaoszyhzbvze6g5tvr6qg2a  | steampipe-test Access Token: steampipe-test | wygy6zfmgzdlzckgruraltkma | false     | API_CREDENTIAL   | 2022-10-11T20:36:34+05:30 |
+| ys6wwudn2jchffycnvaruun7y  | Secure Note                                 | wygy6zfmgzdlzckgturaltkma | false     | SECURE_NOTE      | 2023-04-24T15:15:56+05:30 |
+| jskefwj3k5nefswdwfopxv4ca  | API Credential                              | wygy6zfmgzdlzckgturaltkma | false     | API_CREDENTIAL   | 2023-04-24T14:51:08+05:30 |
++----------------------------+---------------------------------------------+----------------------------+----------+------------------+---------------------------+
 ```
 
 ## Documentation
@@ -83,7 +84,7 @@ connection "onepassword" {
 }
 ```
 
-Alternatively, you can also use the standard 1Password environment variables to obtain credentials **only if the `token` or `url` are not specified** in the connection:
+Alternatively, you can also use the standard 1Password environment variables to obtain credentials **only if `token` and `url` are not specified** in the connection:
 
 ```sh
 export OP_CONNECT_TOKEN=eyJhbGciOiJFUzI1NiIsImtpZCI6InFuN3JwcmZhbnJqZ2V1bWU2eTNidGpjdHN5IiwidHlwIjoiSldUIn0.eyIxcGFzc3dvcmQuY29tL2F1dWlkIjoiVEpGVzVZTlRJSkMzSkNXRFgzQ0dWTUpCSDQiLCIxcGFzc3dvcmQuY29tL3Rva2VuIjoib2tnZGZJWHpEaDhWWkNkRHVNRjZNSUplRUlwN3ZrYUQiLCIxcGFzc3dvcmQuY29tL2Z0cyI6WyJ2YXVsdGFjY2VzcyJdLCIxcGFzc3dvcmQuY29tL3Z0cyI6W3sidSI6ImZwZDR1dW00bHJicTMycG8ybXR2ZGo0c3hpI
