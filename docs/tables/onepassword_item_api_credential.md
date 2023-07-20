@@ -68,7 +68,7 @@ where
   updated_at >= now() - interval '1 month';
 ```
 
-### List API credentials that are marked as favourite
+### List API credentials marked as favourite
 
 ```sql
 select

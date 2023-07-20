@@ -72,7 +72,7 @@ where
   expiry_date < now();
 ```
 
-### List credit cards that are marked as favourite
+### List credit cards marked as favourite
 
 ```sql
 select
