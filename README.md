@@ -7,7 +7,7 @@ Use SQL to query vaults, items, files and more from 1Password.
 - **[Get started →](https://hub.steampipe.io/plugins/turbot/1password)**
 - Documentation: [Table definitions & examples](https://hub.steampipe.io/plugins/turbot/1password/tables)
 - Community: [Slack Channel](https://steampipe.io/community/join)
-- Get involved: [Issues](https://github.com/turbot/steampipe-plugin-1password/issues)
+- Get involved: [Issues](https://github.com/turbot/steampipe-plugin-onepassword/issues)
 
 ## Quick start
 
@@ -80,8 +80,8 @@ Prerequisites:
 Clone:
 
 ```sh
-git clone https://github.com/turbot/steampipe-plugin-1password.git
-cd steampipe-plugin-1password
+git clone https://github.com/turbot/steampipe-plugin-onepassword.git
+cd steampipe-plugin-onepassword
 ```
 
 Build, which automatically installs the new version to your `~/.steampipe/plugins` directory:
@@ -111,9 +111,9 @@ Further reading:
 
 ## Contributing
 
-Please see the [contribution guidelines](https://github.com/turbot/steampipe/blob/main/CONTRIBUTING.md) and our [code of conduct](https://github.com/turbot/steampipe/blob/main/CODE_OF_CONDUCT.md). All contributions are subject to the [Apache 2.0 open source license](https://github.com/turbot/steampipe-plugin-1password/blob/main/LICENSE).
+Please see the [contribution guidelines](https://github.com/turbot/steampipe/blob/main/CONTRIBUTING.md) and our [code of conduct](https://github.com/turbot/steampipe/blob/main/CODE_OF_CONDUCT.md). All contributions are subject to the [Apache 2.0 open source license](https://github.com/turbot/steampipe-plugin-onepassword/blob/main/LICENSE).
 
 `help wanted` issues:
 
 - [Steampipe](https://github.com/turbot/steampipe/labels/help%20wanted)
-- [1Password Plugin](https://github.com/turbot/steampipe-plugin-1password/labels/help%20wanted)
+- [1Password Plugin](https://github.com/turbot/steampipe-plugin-onepassword/labels/help%20wanted)

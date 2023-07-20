@@ -1,4 +1,4 @@
-module github.com/turbot/steampipe-plugin-1password
+module github.com/turbot/steampipe-plugin-onepassword
 
 go 1.19
 

@@ -4,7 +4,7 @@ category: ["security"]
 icon_url: "/images/plugins/turbot/1password.svg"
 brand_color: "#1A8CFF"
 display_name: "1Password"
-short_name: "1password"
+short_name: "onepassword"
 description: "Steampipe plugin to query vaults, items, files and more from 1Password."
 og_description: "Query 1Password with SQL! Open source CLI. No DB required."
 og_image: "/images/plugins/turbot/1password-social-graphic.png"
@@ -93,5 +93,5 @@ export OP_CONNECT_HOST=http://localhost:8080
 
 ## Get involved
 
-- Open source: https://github.com/turbot/steampipe-plugin-1password
+- Open source: https://github.com/turbot/steampipe-plugin-onepassword
 - Community: [Slack Channel](https://steampipe.io/community/join)

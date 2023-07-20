@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/turbot/steampipe-plugin-1password/onepassword"
+	"github.com/turbot/steampipe-plugin-onepassword/onepassword"
 	"github.com/turbot/steampipe-plugin-sdk/v5/plugin"
 )
 
