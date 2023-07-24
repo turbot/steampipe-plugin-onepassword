@@ -1,11 +1,11 @@
-![image](https://hub.steampipe.io/images/plugins/turbot/1password-social-graphic.png)
+![image](https://hub.steampipe.io/images/plugins/turbot/onepassword-social-graphic.png)
 
 # 1Password Plugin for Steampipe
 
 Use SQL to query vaults, items, files and more from 1Password.
 
-- **[Get started →](https://hub.steampipe.io/plugins/turbot/1password)**
-- Documentation: [Table definitions & examples](https://hub.steampipe.io/plugins/turbot/1password/tables)
+- **[Get started →](https://hub.steampipe.io/plugins/turbot/onepassword)**
+- Documentation: [Table definitions & examples](https://hub.steampipe.io/plugins/turbot/onepassword/tables)
 - Community: [Slack Channel](https://steampipe.io/community/join)
 - Get involved: [Issues](https://github.com/turbot/steampipe-plugin-onepassword/issues)
 
@@ -19,7 +19,7 @@ Download and install the latest 1Password plugin:
 steampipe plugin install onepassword
 ```
 
-Configure your [credentials](https://hub.steampipe.io/plugins/turbot/1password#credentials) and [config file](https://hub.steampipe.io/plugins/turbot/1password#configuration).
+Configure your [credentials](https://hub.steampipe.io/plugins/turbot/onepassword#credentials) and [config file](https://hub.steampipe.io/plugins/turbot/onepassword#configuration).
 
 Add your configuration details in `~/.steampipe/config/onepassword.spc`:
 
