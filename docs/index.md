@@ -1,13 +1,13 @@
 ---
 organization: Turbot
 category: ["security"]
-icon_url: "/images/plugins/turbot/1password.svg"
+icon_url: "/images/plugins/turbot/onepassword.svg"
 brand_color: "#1A8CFF"
 display_name: "1Password"
 short_name: "onepassword"
 description: "Steampipe plugin to query vaults, items, files and more from 1Password."
 og_description: "Query 1Password with SQL! Open source CLI. No DB required."
-og_image: "/images/plugins/turbot/1password-social-graphic.png"
+og_image: "/images/plugins/turbot/onepassword-social-graphic.png"
 ---
 
 # 1Password + Steampipe
@@ -42,7 +42,7 @@ from
 
 ## Documentation
 
-- **[Table definitions & examples →](/plugins/turbot/1password/tables)**
+- **[Table definitions & examples →](/plugins/turbot/onepassword/tables)**
 
 ## Quick start
 
