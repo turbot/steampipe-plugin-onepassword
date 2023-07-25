@@ -86,19 +86,19 @@ func tableOnepasswordItemSecureNote(ctx context.Context) *plugin.Table {
 			{
 				Name:        "sections",
 				Type:        proto.ColumnType_JSON,
-				Description: "The category of the item.",
+				Description: "The secure note sections.",
 				Hydrate:     getItemSecureNote,
 			},
 			{
 				Name:        "fields",
 				Type:        proto.ColumnType_JSON,
-				Description: "The category of the item.",
+				Description: "The secure note fields.",
 				Hydrate:     getItemSecureNote,
 			},
 			{
 				Name:        "files",
 				Type:        proto.ColumnType_JSON,
-				Description: "The category of the item.",
+				Description: "The secure note files.",
 				Hydrate:     getItemSecureNote,
 			},
 			{
