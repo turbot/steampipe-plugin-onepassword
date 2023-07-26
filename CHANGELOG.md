@@ -1,3 +1,9 @@
+## v0.0.2 [2023-07-26]
+
+_Bug fixes_
+
+- Fixed the incorrect table doc reference for the `onepassword_item_secure_note` table. ([#4](https://github.com/turbot/steampipe-plugin-/pull/4))
+
 ## v0.0.1 [2023-07-24]
 
 _What's new?_
