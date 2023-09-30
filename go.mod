@@ -4,7 +4,7 @@ go 1.21
 
 require (
 	github.com/1Password/connect-sdk-go v1.5.0
-	github.com/turbot/steampipe-plugin-sdk/v5 v5.6.0
+	github.com/turbot/steampipe-plugin-sdk/v5 v5.6.1
 )
 
 require (
