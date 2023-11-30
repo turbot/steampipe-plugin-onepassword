@@ -1,12 +1,20 @@
-# Table: onepassword_item
+---
+title: "Steampipe Table: onepassword_item - Query 1Password Items using SQL"
+description: "Allows users to query 1Password Items, specifically retrieving details about individual items stored in the 1Password vaults."
+---
 
-An item in 1Password is a container for securely storing a piece of sensitive information, such as a password, login credentials, credit card number, secure note, or other data. Each item in 1Password can have various attributes and fields depending on the type of information it stores, such as a website URL, username, password, expiration date, and more.
+# Table: onepassword_item - Query 1Password Items using SQL
 
-Items can be organized into various categories or folders, such as Personal, Work, or Finance, for easy management and access. They can also be tagged, favorited, or searched for quickly.
+1Password is a password management service that stores sensitive information, including passwords, software licenses, and notes, in a secure and encrypted format. It allows users to create and manage multiple vaults, each containing different sets of items. These items can range from login credentials, secure notes, credit card information, to identities.
+
+## Table Usage Guide
+
+The `onepassword_item` table provides insights into 1Password Items within 1Password. As a security analyst, explore item-specific details through this table, including categories, vault IDs, and associated metadata. Utilize it to uncover information about items, such as their categories, the vaults they belong to, and the intricacies of their details.
 
 ## Examples
 
 ### Basic info
+Explore which items in your OnePassword vault have been recently updated or edited. This can help you keep track of changes and ensure your data remains secure.
 
 ```sql
 select
@@ -22,6 +30,9 @@ from
 ```
 
 ### List items that have been updated in the last 30 days
+1. "Explore which items have been modified in the past month to keep track of recent changes."
+2. "Identify instances where items are tagged as 'production' to focus on operational elements."
+3. "Analyze the fields of items within a specific section, such as 'Metadata', to gain insights into categorized data.
 
 ```sql
 select

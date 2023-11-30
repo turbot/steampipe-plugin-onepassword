@@ -1,12 +1,20 @@
-# Table: onepassword_item_file
+---
+title: "Steampipe Table: onepassword_item_file - Query OnePassword File Items using SQL"
+description: "Allows users to query File Items in OnePassword, providing detailed information about each file item stored in the OnePassword vaults."
+---
 
-1Password lets you securely store your most important files, so they’re always available when you need them.
+# Table: onepassword_item_file - Query OnePassword File Items using SQL
 
-- You **_must_** specify `item_id` in a `where` clause in order to use this table.
+OnePassword is a password management service that stores sensitive information, including File Items, in a secure and encrypted format. File Items in OnePassword include any files that users have uploaded and stored in their OnePassword vaults for safekeeping. This includes a variety of file types, such as images, documents, and more, all of which are securely encrypted and only accessible to authorized users.
+
+## Table Usage Guide
+
+The `onepassword_item_file` table provides insights into File Items within OnePassword. As a security analyst, explore file-specific details through this table, including the file's unique identifier, its associated vault, and other metadata. Utilize it to uncover information about stored files, such as their creation and modification dates, to assist in auditing and compliance checks.
 
 ## Examples
 
 ### Basic info
+Explore the details of a specific item in a password management system. This allows you to understand the size and location of the item, which can be useful for managing storage and organization within the system.
 
 ```sql
 select
@@ -23,6 +31,7 @@ where
 ```
 
 ### List all files of a particular vault
+This example allows you to identify all the files associated with a specific vault in the 1Password service. It's particularly useful for auditing purposes, ensuring you have a comprehensive list of all files stored in a particular vault.
 
 ```sql
 select
@@ -42,6 +51,7 @@ where
 ```
 
 ### Show file contents of all items
+Explore the contents of all items in a system, helping you gain insights into data organization and identify potential areas for cleanup or reorganization. This could be particularly useful for auditing purposes or data management initiatives.
 
 ```sql
 select
