@@ -11,6 +11,9 @@ OnePassword is a password management service that stores sensitive information, 
 
 The `onepassword_item_file` table provides insights into File Items within OnePassword. As a security analyst, explore file-specific details through this table, including the file's unique identifier, its associated vault, and other metadata. Utilize it to uncover information about stored files, such as their creation and modification dates, to assist in auditing and compliance checks.
 
+**Important Notes**
+- You must specify the `item_id` in the `where` clause to query this table.
+
 ## Examples
 
 ### Basic info
