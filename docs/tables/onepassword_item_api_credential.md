@@ -16,7 +16,19 @@ The `onepassword_item_api_credential` table provides insights into API credentia
 ### Basic info
 Explore the OnePassword API credentials to gain insights into user activity and preferences. This can be useful for assessing user behavior and identifying potential security risks.
 
-```sql
+```sql+postgres
+select
+  id,
+  title,
+  username,
+  credential,
+  created_at,
+  favorite
+from
+  onepassword_item_api_credential;
+```
+
+```sql+sqlite
 select
   id,
   title,
@@ -31,7 +43,23 @@ from
 ### List API credentials stored in a particular vault
 Discover the segments that have stored API credentials in a specific vault. This can be useful to audit the security of your credentials and ensure they are stored in the correct vault.
 
-```sql
+```sql+postgres
+select
+  c.id,
+  c.title,
+  username,
+  credential,
+  c.created_at,
+  favorite
+from
+  onepassword_item_api_credential as c,
+  onepassword_vault as v
+where
+  c.vault_id = v.id
+  and v.name = 'my-creds';
+```
+
+```sql+sqlite
 select
   c.id,
   c.title,
@@ -50,7 +78,7 @@ where
 ### Show API credentials that contain a specific tag
 Discover the segments that contain specific tags within your API credentials. This can help you quickly identify and manage credentials associated with certain projects or tasks.
 
-```sql
+```sql+postgres
 select
   id,
   title,
@@ -64,10 +92,14 @@ where
   tags @> '["nps-creds"]';
 ```
 
+```sql+sqlite
+Error: The corresponding SQLite query is unavailable.
+```
+
 ### List API credentials that were updated within the last month
 Determine the API credentials that have been recently updated to ensure they are current and secure. This can be beneficial for maintaining system integrity and mitigating potential security risks.
 
-```sql
+```sql+postgres
 select
   id,
   title,
@@ -81,10 +113,24 @@ where
   updated_at >= now() - interval '1 month';
 ```
 
+```sql+sqlite
+select
+  id,
+  title,
+  username,
+  credential,
+  created_at,
+  favorite
+from
+  onepassword_item_api_credential
+where
+  updated_at >= datetime('now', '-1 month');
+```
+
 ### List API credentials marked as favourite
 Explore which API credentials have been marked as favourites, to easily access them for future use. This could be particularly useful in managing and prioritizing multiple API credentials.
 
-```sql
+```sql+postgres
 select
   id,
   title,
@@ -96,4 +142,18 @@ from
   onepassword_item_api_credential
 where
   favorite;
+```
+
+```sql+sqlite
+select
+  id,
+  title,
+  username,
+  credential,
+  created_at,
+  favorite
+from
+  onepassword_item_api_credential
+where
+  favorite = 1;
 ```

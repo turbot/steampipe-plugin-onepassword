@@ -16,7 +16,20 @@ The `onepassword_item` table provides insights into 1Password Items within 1Pass
 ### Basic info
 Explore which items in your OnePassword vault have been recently updated or edited. This can help you keep track of changes and ensure your data remains secure.
 
-```sql
+```sql+postgres
+select
+  id,
+  vault_id,
+  title,
+  created_at,
+  updated_at,
+  last_edited_by,
+  tags
+from
+  onepassword_item;
+```
+
+```sql+sqlite
 select
   id,
   vault_id,
@@ -30,11 +43,9 @@ from
 ```
 
 ### List items that have been updated in the last 30 days
-1. "Explore which items have been modified in the past month to keep track of recent changes."
-2. "Identify instances where items are tagged as 'production' to focus on operational elements."
-3. "Analyze the fields of items within a specific section, such as 'Metadata', to gain insights into categorized data.
+Explore which items have been modified in the past month to keep track of recent changes.
 
-```sql
+```sql+postgres
 select
   id,
   vault_id,
@@ -49,9 +60,25 @@ where
   updated_at > now() - interval '30 day';
 ```
 
-## List items with production tag
+```sql+sqlite
+select
+  id,
+  vault_id,
+  title,
+  created_at,
+  updated_at,
+  last_edited_by,
+  tags
+from
+  onepassword_item
+where
+  updated_at > datetime('now', '-30 day');
+```
 
-```sql
+### List items with production tag
+Identify instances where items are tagged as 'production' to focus on operational elements.
+
+```sql+postgres
 select
   id,
   title,
@@ -64,9 +91,14 @@ where
   tags @> '["production"]';
 ```
 
-## List the fields of all items with a specific section
+```sql+sqlite
+Error: The corresponding SQLite query is unavailable.
+```
 
-```sql
+### List the fields of all items with a specific section
+Analyze the fields of items within a specific section, such as 'Metadata', to gain insights into categorized data.
+
+```sql+postgres
 select
   title,
   jsonb_pretty(f) as field
@@ -75,4 +107,15 @@ from
   jsonb_array_elements(fields) as f
 where
   f -> 'section' ->> 'label' = 'Metadata';
+```
+
+```sql+sqlite
+select
+  title,
+  f.value as field
+from
+  onepassword_item,
+  json_each(fields) as f
+where
+  json_extract(json_extract(f.value, '$.section'), '$.label') = 'Metadata';
 ```

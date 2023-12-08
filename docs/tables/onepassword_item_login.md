@@ -16,7 +16,20 @@ The `onepassword_item_login` table provides insights into Login Items within 1Pa
 ### Basic info
 Gain insights into the creation and modification dates of your login items, along with any tags associated with them. This allows for easy tracking and management of your login credentials over time.
 
-```sql
+```sql+postgres
+select
+  id,
+  title,
+  username,
+  password,
+  created_at,
+  updated_at,
+  tags
+from
+  onepassword_item_login;
+```
+
+```sql+sqlite
 select
   id,
   title,
@@ -32,7 +45,7 @@ from
 ### List logins along with website details
 Explore the details of your saved logins, including the associated websites, to better manage your online accounts. This can help in tracking account creation dates and ensuring password security.
 
-```sql
+```sql+postgres
 select
   id,
   title,
@@ -45,10 +58,39 @@ from
   jsonb_array_elements(urls) as u;
 ```
 
+```sql+sqlite
+select
+  id,
+  title,
+  username,
+  password,
+  u.value as website,
+  created_at
+from
+  onepassword_item_login,
+  json_each(urls) as u;
+```
+
 ### List logins of a particular vault
 Explore which logins are associated with a specified secure vault. This is useful to assess the elements within a specific vault for better management and security.
 
-```sql
+```sql+postgres
+select
+  p.id,
+  p.title,
+  username,
+  password,
+  p.created_at,
+  p.tags
+from
+  onepassword_item_login as p,
+  onepassword_vault as v
+where
+  p.vault_id = v.id
+  and v.name = 'my-creds';
+```
+
+```sql+sqlite
 select
   p.id,
   p.title,
@@ -67,7 +109,7 @@ where
 ### Show logins that contain a specific tag
 Explore which login items are associated with a specific tag to better manage and categorize your credentials. This can be particularly useful for identifying and organizing logins related to a certain project or platform, such as Amazon.
 
-```sql
+```sql+postgres
 select
   id,
   title,
@@ -81,10 +123,27 @@ where
   tags @> '["amazon-use"]';
 ```
 
+```sql+sqlite
+Error: SQLite does not support array operations.
+```
+
 ### List logins with password length less than 8 characters
 Identify instances where user passwords may be less secure due to their short length. This is useful for auditing account security and identifying potential vulnerabilities.
 
-```sql
+```sql+postgres
+select
+  id,
+  title,
+  username,
+  password,
+  created_at
+from
+  onepassword_item_login
+where
+  length(password) < 8;
+```
+
+```sql+sqlite
 select
   id,
   title,

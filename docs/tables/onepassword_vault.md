@@ -16,7 +16,19 @@ The `onepassword_vault` table provides insights into Vaults within 1Password. As
 ### Basic info
 Explore the creation and modification details of your 1Password vaults. This allows you to keep track of vault updates and understand their types and descriptions for better management.
 
-```sql
+```sql+postgres
+select
+  id,
+  name,
+  created_at,
+  description,
+  type,
+  updated_at
+from
+  onepassword_vault;
+```
+
+```sql+sqlite
 select
   id,
   name,
@@ -31,7 +43,7 @@ from
 ### List vaults created in the last 30 days
 Discover the segments that have recently added secure vaults in the past month. This is useful for tracking the creation of new storage spaces for sensitive information.
 
-```sql
+```sql+postgres
 select
   id,
   name,
@@ -45,10 +57,39 @@ where
   created_at >= now() - interval '30 day';
 ```
 
+```sql+sqlite
+select
+  id,
+  name,
+  created_at,
+  description,
+  type,
+  updated_at
+from
+  onepassword_vault
+where
+  created_at >= datetime('now', '-30 day');
+```
+
 ### Show vaults with zero items
 Discover the segments that have zero items stored in them to understand where storage is currently unused or potentially unutilized. This can be useful in identifying areas for better resource allocation or for detecting any anomalies.
 
-```sql
+```sql+postgres
+select
+  id,
+  name,
+  created_at,
+  items,
+  description,
+  type,
+  updated_at
+from
+  onepassword_vault
+where
+  items = 0;
+```
+
+```sql+sqlite
 select
   id,
   name,
@@ -66,7 +107,22 @@ where
 ### Show personal vaults
 Discover the segments that comprise your personal vaults. This query is useful for gaining insights into your individual vaults, including when they were created and last updated, and what items they contain.
 
-```sql
+```sql+postgres
+select
+  id,
+  name,
+  created_at,
+  items,
+  description,
+  type,
+  updated_at
+from
+  onepassword_vault
+where
+  type = 'PERSONAL';
+```
+
+```sql+sqlite
 select
   id,
   name,

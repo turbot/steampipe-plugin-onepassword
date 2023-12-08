@@ -16,7 +16,23 @@ The `onepassword_item_identity` table provides insights into Identity Items with
 ### Basic info
 Explore which employees belong to a specific department within your company, gaining insights into their job titles and occupations. This can help in understanding the distribution of roles and responsibilities within each department.
 
-```sql
+```sql+postgres
+select
+  id,
+  title,
+  first_name,
+  last_name,
+  birth_date,
+  company,
+  department,
+  gender,
+  job_title,
+  occupation
+from
+  onepassword_item_identity;
+```
+
+```sql+sqlite
 select
   id,
   title,
@@ -35,7 +51,27 @@ from
 ### List identities of a particular vault
 Explore the profiles stored in a specific secure vault to gain insights into the identities it contains. This can be useful for auditing purposes, ensuring that only the appropriate identities are stored in a particular vault.
 
-```sql
+```sql+postgres
+select
+  i.id,
+  i.title,
+  first_name,
+  last_name,
+  birth_date,
+  company,
+  department,
+  gender,
+  job_title,
+  occupation
+from
+  onepassword_item_identity as i,
+  onepassword_vault as v
+where
+  i.vault_id = v.id
+  and v.name = 'my-creds';
+```
+
+```sql+sqlite
 select
   i.id,
   i.title,
@@ -58,7 +94,7 @@ where
 ### Show identities that contain a specific tag
 Explore which identities are associated with a specific tag in order to manage and organize your data more effectively. This can be beneficial in scenarios such as identifying all employees associated with a specific project or department.
 
-```sql
+```sql+postgres
 select
   id,
   title,
@@ -76,10 +112,31 @@ where
   tags @> '["chat-company"]';
 ```
 
+```sql+sqlite
+Error: The corresponding SQLite 
+```
+
 ### List identities whose birth date is before a certain date
 Discover the identities that were born before a specific date. This can be useful for demographic analysis or to identify potential age-related factors in your data.
 
-```sql
+```sql+postgres
+select
+  id,
+  title,
+  first_name,
+  last_name,
+  company,
+  department,
+  gender,
+  job_title,
+  occupation
+from
+  onepassword_item_identity
+where
+  birth_date < '1990-01-01';
+```
+
+```sql+sqlite
 select
   id,
   title,
@@ -99,7 +156,24 @@ where
 ### Show identities with the job title software engineer
 Explore which identities in your database are associated with the job title 'software engineer'. This can be useful for identifying potential candidates for internal job postings or for understanding the distribution of roles within your organization.
 
-```sql
+```sql+postgres
+select
+  id,
+  title,
+  first_name,
+  last_name,
+  birth_date,
+  company,
+  department,
+  gender,
+  occupation
+from
+  onepassword_item_identity
+where
+  job_title = 'software engineer';
+```
+
+```sql+sqlite
 select
   id,
   title,
@@ -119,7 +193,17 @@ where
 ### Get the number of identities for each occupation
 Explore the distribution of identities across different occupations. This can provide insights into the diversity of roles within your organization.
 
-```sql
+```sql+postgres
+select
+  occupation,
+  count(*)
+from
+  onepassword_item_identity
+group by
+  occupation;
+```
+
+```sql+sqlite
 select
   occupation,
   count(*)
