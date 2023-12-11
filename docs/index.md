@@ -8,6 +8,7 @@ short_name: "onepassword"
 description: "Steampipe plugin to query vaults, items, files and more from 1Password."
 og_description: "Query 1Password with SQL! Open source CLI. No DB required."
 og_image: "/images/plugins/turbot/onepassword-social-graphic.png"
+engines: ["steampipe", "sqlite", "postgres", "export"]
 ---
 
 # 1Password + Steampipe
