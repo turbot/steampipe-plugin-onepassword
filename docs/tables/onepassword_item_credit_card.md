@@ -72,6 +72,23 @@ select
   c.created_at,
   favorite
 from
+  onepassword_item_credit_card as c,
+  onepassword_vault as v
+where
+  c.vault_id = v.id
+  and v.name = 'my-creds';
+```
+
+```sql+sqlite
+select
+  c.id,
+  c.title,
+  card_holder,
+  credit_card_number,
+  expiry_date,
+  c.created_at,
+  favorite
+from
   onepassword_item_credit_card as c
 join
   onepassword_vault as v

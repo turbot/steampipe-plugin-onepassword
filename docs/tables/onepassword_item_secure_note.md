@@ -72,6 +72,22 @@ select
   s.updated_at,
   favorite
 from
+  onepassword_item_secure_note as s,
+  onepassword_vault as v
+where
+  s.vault_id = v.id
+  and v.name = 'my-creds';
+```
+
+```sql+sqlite
+select
+  s.id,
+  s.title,
+  notes_plain,
+  s.created_at,
+  s.updated_at,
+  favorite
+from
   onepassword_item_secure_note as s
 join
   onepassword_vault as v

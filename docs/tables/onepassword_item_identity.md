@@ -113,7 +113,7 @@ where
 ```
 
 ```sql+sqlite
-Error: The corresponding SQLite 
+Error: The corresponding SQLite query is unavailable.
 ```
 
 ### List identities whose birth date is before a certain date

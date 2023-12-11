@@ -66,11 +66,13 @@ select
   s.created_at,
   favorite
 from
-  onepassword_item_software_license as s,
+  onepassword_item_software_license as s
+join
   onepassword_vault as v
-where
+on
   s.vault_id = v.id
-  and v.name = 'my-creds';
+where
+  v.name = 'my-creds';
 ```
 
 ### Show software licenses that contain a specific tag
