@@ -92,7 +92,4 @@ export OP_CONNECT_TOKEN=eyJhbGciOiJFUzI1NiIsImtpZCI6InFuN3JwcmZhbnJqZ2V1bWU2eTNi
 export OP_CONNECT_HOST=http://localhost:8080
 ```
 
-## Get involved
 
-- Open source: https://github.com/turbot/steampipe-plugin-onepassword
-- Community: [Join #steampipe on Slack →](https://turbot.com/community/join)
