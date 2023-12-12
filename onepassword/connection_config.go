@@ -2,21 +2,11 @@ package onepassword
 
 import (
 	"github.com/turbot/steampipe-plugin-sdk/v5/plugin"
-	"github.com/turbot/steampipe-plugin-sdk/v5/plugin/schema"
 )
 
 type onepasswordConfig struct {
-	Token *string `cty:"token"`
-	URL   *string `cty:"url"`
-}
-
-var ConfigSchema = map[string]*schema.Attribute{
-	"token": {
-		Type: schema.TypeString,
-	},
-	"url": {
-		Type: schema.TypeString,
-	},
+	Token *string `hcl:"token"`
+	URL   *string `hcl:"url"`
 }
 
 func ConfigInstance() interface{} {
