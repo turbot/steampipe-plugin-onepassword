@@ -8,13 +8,14 @@ short_name: "onepassword"
 description: "Steampipe plugin to query vaults, items, files and more from 1Password."
 og_description: "Query 1Password with SQL! Open source CLI. No DB required."
 og_image: "/images/plugins/turbot/onepassword-social-graphic.png"
+engines: ["steampipe", "sqlite", "postgres", "export"]
 ---
 
 # 1Password + Steampipe
 
 [1Password](https://1password.com/) is a password manager, digital vault, form filler and secure digital wallet.
 
-[Steampipe](https://steampipe.io) is an open source CLI to instantly query cloud APIs using SQL.
+[Steampipe](https://steampipe.io) is an open-source zero-ETL engine to instantly query cloud APIs using SQL.
 
 List your 1Password items:
 
@@ -91,7 +92,4 @@ export OP_CONNECT_TOKEN=eyJhbGciOiJFUzI1NiIsImtpZCI6InFuN3JwcmZhbnJqZ2V1bWU2eTNi
 export OP_CONNECT_HOST=http://localhost:8080
 ```
 
-## Get involved
 
-- Open source: https://github.com/turbot/steampipe-plugin-onepassword
-- Community: [Join #steampipe on Slack →](https://turbot.com/community/join)
