@@ -5,8 +5,10 @@ import (
 )
 
 type onepasswordConfig struct {
-	Token *string `hcl:"token"`
-	URL   *string `hcl:"url"`
+	Token       *string `hcl:"token"`
+	URL         *string `hcl:"url"`
+	EventsToken *string `hcl:"events_token"`
+	EventsURL   *string `hcl:"events_url"`
 }
 
 func ConfigInstance() interface{} {

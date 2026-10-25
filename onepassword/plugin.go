@@ -15,6 +15,7 @@ func Plugin(ctx context.Context) *plugin.Plugin {
 		},
 		DefaultTransform: transform.FromCamel(),
 		TableMap: map[string]*plugin.Table{
+			"onepassword_audit_event":           tableOnepasswordAuditEvent(ctx),
 			"onepassword_item":                  tableOnepasswordItem(ctx),
 			"onepassword_item_api_credential":   tableOnepasswordItemAPICredential(ctx),
 			"onepassword_item_credit_card":      tableOnepasswordItemCreditCard(ctx),
@@ -25,6 +26,8 @@ func Plugin(ctx context.Context) *plugin.Plugin {
 			"onepassword_item_password":         tableOnepasswordItemPassword(ctx),
 			"onepassword_item_secure_note":      tableOnepasswordItemSecureNote(ctx),
 			"onepassword_item_software_license": tableOnepasswordItemSoftwareLicense(ctx),
+			"onepassword_item_usage":            tableOnepasswordItemUsage(ctx),
+			"onepassword_signin_attempt":        tableOnepasswordSigninAttempt(ctx),
 			"onepassword_vault":                 tableOnepasswordVault(ctx),
 		},
 	}
