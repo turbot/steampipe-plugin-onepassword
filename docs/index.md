@@ -59,8 +59,8 @@ steampipe plugin install onepassword
 
 | Item        | Description                                                                                                                                                                                                                                                                                                      |
 | ----------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Credentials | 1Password requires an [Access Token](https://developer.1password.com/docs/connect/manage-secrets-automation#issue-revoke-or-rename-an-access-token) or [Access Token](https://developer.1password.com/docs/connect/manage-secrets-automation#issue-revoke-or-rename-an-access-token) and a URL for all requests. |
-| Permissions | The permission scope of access tokens is limited to the vaults that the admin provides access to.                                                                                                                                                                                                                |
+| Credentials | 1Password requires an [Access Token](https://developer.1password.com/docs/connect/manage-secrets-automation#issue-revoke-or-rename-an-access-token) or [Access Token](https://developer.1password.com/docs/connect/manage-secrets-automation#issue-revoke-or-rename-an-access-token) and a URL for all requests. The `onepassword_user` table instead needs the client ID and secret of a [Users API](https://www.1password.dev/users-api/get-started) OAuth application and your account ID. |
+| Permissions | The permission scope of access tokens is limited to the vaults that the admin provides access to. The Users API OAuth application needs the `users.view` scope. |
 | Radius      | Each connection represents a single 1Password Installation.                                                                                                                                                                                                                                                      |
 | Resolution  | 1. Credentials explicitly set in a steampipe config file (`~/.steampipe/config/onepassword.spc`)<br />2. Credentials specified in environment variables, e.g., `OP_CONNECT_TOKEN`, `OP_CONNECT_HOST`.                                                                                                            |
 
@@ -82,6 +82,18 @@ connection "onepassword" {
   # The host URL set to default http://localhost:8080. Optional.
   # This can also be set via the `OP_CONNECT_HOST` environment variable.
   # url = "http://localhost:8080"
+
+  # The client ID and client secret of a 1Password OAuth application with the `users.view` scope,
+  # and the 26-character ID of your account, for the onepassword_user table. Optional; all three
+  # must be set together.
+  # See https://www.1password.dev/users-api/get-started
+  # users_client_id     = "H3WVOKGN4B7JXQYCQ6DJFAW5ZU"
+  # users_client_secret = "Q2s4ZmVnaGprbG1ub3BxcnN0dXZ3eHl6MDEyMzQ1Njc4OWFi"
+  # users_account_id    = "WX52YXL2MVEPBK43P3R4XMWKXI"
+
+  # The Users API URL for your account's region. Optional, defaults to https://api.1password.com.
+  # Use https://api.ent.1password.com, https://api.1password.ca or https://api.1password.eu for those accounts.
+  # users_api_url = "https://api.1password.com"
 }
 ```
 

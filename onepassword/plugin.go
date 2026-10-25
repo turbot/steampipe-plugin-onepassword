@@ -25,6 +25,7 @@ func Plugin(ctx context.Context) *plugin.Plugin {
 			"onepassword_item_password":         tableOnepasswordItemPassword(ctx),
 			"onepassword_item_secure_note":      tableOnepasswordItemSecureNote(ctx),
 			"onepassword_item_software_license": tableOnepasswordItemSoftwareLicense(ctx),
+			"onepassword_user":                  tableOnepasswordUser(ctx),
 			"onepassword_vault":                 tableOnepasswordVault(ctx),
 		},
 	}

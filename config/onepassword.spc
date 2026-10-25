@@ -9,4 +9,16 @@ connection "onepassword" {
   # The host URL set to default http://localhost:8080. Optional.
   # This can also be set via the `OP_CONNECT_HOST` environment variable.
   # url = "http://localhost:8080"
+
+  # The client ID and client secret of a 1Password OAuth application with the `users.view` scope,
+  # and the 26-character ID of your account, for the onepassword_user table. Optional; all three
+  # must be set together.
+  # See https://www.1password.dev/users-api/get-started
+  # users_client_id     = "H3WVOKGN4B7JXQYCQ6DJFAW5ZU"
+  # users_client_secret = "Q2s4ZmVnaGprbG1ub3BxcnN0dXZ3eHl6MDEyMzQ1Njc4OWFi"
+  # users_account_id    = "WX52YXL2MVEPBK43P3R4XMWKXI"
+
+  # The Users API URL for your account's region. Optional, defaults to https://api.1password.com.
+  # Use https://api.ent.1password.com, https://api.1password.ca or https://api.1password.eu for those accounts.
+  # users_api_url = "https://api.1password.com"
 }
