@@ -139,13 +139,13 @@ func listItemSoftwareLicenses(ctx context.Context, d *plugin.QueryData, h *plugi
 		return nil, nil
 	}
 
-	client, err := getClient(ctx, d)
+	client, err := getBackend(ctx, d)
 	if err != nil {
 		plugin.Logger(ctx).Error("onepassword_item_software_license.listItemSoftwareLicenses", "connection_error", err)
 		return nil, err
 	}
 
-	items, err := client.GetItems(vault.ID)
+	items, err := client.ListItems(ctx, vault.ID)
 	if err != nil {
 		plugin.Logger(ctx).Error("onepassword_item_software_license.listItemSoftwareLicenses", "api_error", err)
 		return nil, err
@@ -183,13 +183,13 @@ func getItemSoftwareLicense(ctx context.Context, d *plugin.QueryData, h *plugin.
 		return nil, nil
 	}
 
-	client, err := getClient(ctx, d)
+	client, err := getBackend(ctx, d)
 	if err != nil {
 		plugin.Logger(ctx).Error("onepassword_item_software_license.getItemSoftwareLicense", "connection_error", err)
 		return nil, err
 	}
 
-	item, err := client.GetItem(id, vault_id)
+	item, err := client.GetItem(ctx, id, vault_id)
 	if err != nil {
 		plugin.Logger(ctx).Error("onepassword_item_software_license.getItemSoftwareLicense", "api_error", err)
 		return nil, err

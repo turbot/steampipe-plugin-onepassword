@@ -196,13 +196,13 @@ func listItemIdentities(ctx context.Context, d *plugin.QueryData, h *plugin.Hydr
 		return nil, nil
 	}
 
-	client, err := getClient(ctx, d)
+	client, err := getBackend(ctx, d)
 	if err != nil {
 		plugin.Logger(ctx).Error("onepassword_item_identity.listItemIdentities", "connection_error", err)
 		return nil, err
 	}
 
-	items, err := client.GetItems(vault.ID)
+	items, err := client.ListItems(ctx, vault.ID)
 	if err != nil {
 		plugin.Logger(ctx).Error("onepassword_item_identity.listItemIdentities", "api_error", err)
 		return nil, err
@@ -240,13 +240,13 @@ func getItemIdentity(ctx context.Context, d *plugin.QueryData, h *plugin.Hydrate
 		return nil, nil
 	}
 
-	client, err := getClient(ctx, d)
+	client, err := getBackend(ctx, d)
 	if err != nil {
 		plugin.Logger(ctx).Error("onepassword_item_identity.getItemIdentity", "connection_error", err)
 		return nil, err
 	}
 
-	item, err := client.GetItem(id, vault_id)
+	item, err := client.GetItem(ctx, id, vault_id)
 	if err != nil {
 		plugin.Logger(ctx).Error("onepassword_item_identity.getItemIdentity", "api_error", err)
 		return nil, err

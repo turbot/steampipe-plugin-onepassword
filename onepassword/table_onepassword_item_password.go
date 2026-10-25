@@ -139,13 +139,13 @@ func listItemPasswords(ctx context.Context, d *plugin.QueryData, h *plugin.Hydra
 		return nil, nil
 	}
 
-	client, err := getClient(ctx, d)
+	client, err := getBackend(ctx, d)
 	if err != nil {
 		plugin.Logger(ctx).Error("onepassword_item_password.listItemPasswords", "connection_error", err)
 		return nil, err
 	}
 
-	items, err := client.GetItems(vault.ID)
+	items, err := client.ListItems(ctx, vault.ID)
 	if err != nil {
 		plugin.Logger(ctx).Error("onepassword_item_password.listItemPasswords", "api_error", err)
 		return nil, err
@@ -183,13 +183,13 @@ func getItemPassword(ctx context.Context, d *plugin.QueryData, h *plugin.Hydrate
 		return nil, nil
 	}
 
-	client, err := getClient(ctx, d)
+	client, err := getBackend(ctx, d)
 	if err != nil {
 		plugin.Logger(ctx).Error("onepassword_item_password.getItemPassword", "connection_error", err)
 		return nil, err
 	}
 
-	item, err := client.GetItem(id, vault_id)
+	item, err := client.GetItem(ctx, id, vault_id)
 	if err != nil {
 		plugin.Logger(ctx).Error("onepassword_item_password.getItemPassword", "api_error", err)
 		return nil, err

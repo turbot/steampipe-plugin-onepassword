@@ -13,6 +13,7 @@ The `onepassword_item_file` table provides insights into File Items within OnePa
 
 **Important Notes**
 - You must specify the `item_id` in the `where` clause to query this table.
+- This table needs a Connect server connection (`token` and `url`); a service account connection returns an error.
 
 ## Examples
 

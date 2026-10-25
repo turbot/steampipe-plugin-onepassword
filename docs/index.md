@@ -57,12 +57,12 @@ steampipe plugin install onepassword
 
 ### Credentials
 
-| Item        | Description                                                                                                                                                                                                                                                                                                      |
-| ----------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Credentials | 1Password requires an [Access Token](https://developer.1password.com/docs/connect/manage-secrets-automation#issue-revoke-or-rename-an-access-token) or [Access Token](https://developer.1password.com/docs/connect/manage-secrets-automation#issue-revoke-or-rename-an-access-token) and a URL for all requests. |
-| Permissions | The permission scope of access tokens is limited to the vaults that the admin provides access to.                                                                                                                                                                                                                |
-| Radius      | Each connection represents a single 1Password Installation.                                                                                                                                                                                                                                                      |
-| Resolution  | 1. Credentials explicitly set in a steampipe config file (`~/.steampipe/config/onepassword.spc`)<br />2. Credentials specified in environment variables, e.g., `OP_CONNECT_TOKEN`, `OP_CONNECT_HOST`.                                                                                                            |
+| Item        | Description |
+| ----------- | ----------- |
+| Credentials | Either a [service account token](https://developer.1password.com/docs/service-accounts/get-started/) (`ops_...`), or a [Connect server](https://developer.1password.com/docs/connect/manage-secrets-automation#issue-revoke-or-rename-an-access-token) access token and URL. |
+| Permissions | Both credentials see only the vaults they have been granted access to. `onepassword_item_file` needs a Connect server. |
+| Radius      | Each connection represents a single 1Password account (service account) or Connect server. |
+| Resolution  | 1. Credentials explicitly set in a steampipe config file (`~/.steampipe/config/onepassword.spc`), where `service_account_token` takes precedence over `token`.<br />2. Credentials specified in environment variables, where `OP_SERVICE_ACCOUNT_TOKEN` takes precedence over `OP_CONNECT_TOKEN` and `OP_CONNECT_HOST`. |
 
 ### Configuration
 
@@ -82,14 +82,24 @@ connection "onepassword" {
   # The host URL set to default http://localhost:8080. Optional.
   # This can also be set via the `OP_CONNECT_HOST` environment variable.
   # url = "http://localhost:8080"
+
+  # A service account token, used instead of a Connect server. Optional.
+  # Takes precedence over `token` when both are set.
+  # See https://developer.1password.com/docs/service-accounts/get-started/
+  # This can also be set via the `OP_SERVICE_ACCOUNT_TOKEN` environment variable.
+  # service_account_token = "ops_eyJzaWduSW5BZGRyZXNzIjoibXkuMXBhc3N3b3JkLmNvbSIsInVzZXJBdXRoIjp7Im1ldGhvZCI6IlNSUGctNDA5NiIsImFsZyI6IlBCRVMyZy1IUzI1NiIsIml0ZXJhdGlvbnMiOjY1MDAwMH19"
 }
 ```
 
-Alternatively, you can also use the standard 1Password environment variables to obtain credentials **only if `token` and `url` are not specified** in the connection:
+Alternatively, you can also use the standard 1Password environment variables to obtain credentials **only if `service_account_token` and `token` are not specified** in the connection:
 
 ```sh
 export OP_CONNECT_TOKEN=eyJhbGciOiJFUzI1NiIsImtpZCI6InFuN3JwcmZhbnJqZ2V1bWU2eTNidGpjdHN5IiwidHlwIjoiSldUIn0.eyIxcGFzc3dvcmQuY29tL2F1dWlkIjoiVEpGVzVZTlRJSkMzSkNXRFgzQ0dWTUpCSDQiLCIxcGFzc3dvcmQuY29tL3Rva2VuIjoib2tnZGZJWHpEaDhWWkNkRHVNRjZNSUplRUlwN3ZrYUQiLCIxcGFzc3dvcmQuY29tL2Z0cyI6WyJ2YXVsdGFjY2VzcyJdLCIxcGFzc3dvcmQuY29tL3Z0cyI6W3sidSI6ImZwZDR1dW00bHJicTMycG8ybXR2ZGo0c3hpI
 export OP_CONNECT_HOST=http://localhost:8080
 ```
 
+Or, for a service account:
 
+```sh
+export OP_SERVICE_ACCOUNT_TOKEN=ops_eyJzaWduSW5BZGRyZXNzIjoibXkuMXBhc3N3b3JkLmNvbSIsInVzZXJBdXRoIjp7Im1ldGhvZCI6IlNSUGctNDA5NiIsImFsZyI6IlBCRVMyZy1IUzI1NiIsIml0ZXJhdGlvbnMiOjY1MDAwMH19
+```

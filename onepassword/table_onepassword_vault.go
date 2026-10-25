@@ -86,13 +86,13 @@ func tableOnepasswordVault(ctx context.Context) *plugin.Table {
 /// LIST FUNCTION
 
 func listVaults(ctx context.Context, d *plugin.QueryData, _ *plugin.HydrateData) (interface{}, error) {
-	client, err := getClient(ctx, d)
+	client, err := getBackend(ctx, d)
 	if err != nil {
 		plugin.Logger(ctx).Error("onepassword_vault.listVaults", "connection_error", err)
 		return nil, err
 	}
 
-	vaults, err := client.GetVaults()
+	vaults, err := client.ListVaults(ctx)
 	if err != nil {
 		plugin.Logger(ctx).Error("onepassword_vault.listVaults", "api_error", err)
 		return nil, err
@@ -120,13 +120,13 @@ func getVault(ctx context.Context, d *plugin.QueryData, _ *plugin.HydrateData) (
 		return nil, nil
 	}
 
-	client, err := getClient(ctx, d)
+	client, err := getBackend(ctx, d)
 	if err != nil {
 		plugin.Logger(ctx).Error("onepassword_vault.getVault", "connection_error", err)
 		return nil, err
 	}
 
-	vault, err := client.GetVault(id)
+	vault, err := client.GetVault(ctx, id)
 	if err != nil {
 		plugin.Logger(ctx).Error("onepassword_vault.getVault", "api_error", err)
 		return nil, err

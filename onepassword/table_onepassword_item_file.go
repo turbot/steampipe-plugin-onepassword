@@ -107,13 +107,13 @@ func listItemFiles(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateDa
 		return nil, nil
 	}
 
-	client, err := getClient(ctx, d)
+	client, err := getBackend(ctx, d)
 	if err != nil {
 		plugin.Logger(ctx).Error("onepassword_item_file.listItemFiles", "connection_error", err)
 		return nil, err
 	}
 
-	files, err := client.GetFiles(item_id, vault.ID)
+	files, err := client.ListFiles(ctx, item_id, vault.ID)
 	if err != nil {
 		// handle not found err
 		if isNotFoundError(err) {
@@ -147,13 +147,13 @@ func getItemFile(ctx context.Context, d *plugin.QueryData, _ *plugin.HydrateData
 		return nil, nil
 	}
 
-	client, err := getClient(ctx, d)
+	client, err := getBackend(ctx, d)
 	if err != nil {
 		plugin.Logger(ctx).Error("onepassword_item_file.getItemFile", "connection_error", err)
 		return nil, err
 	}
 
-	file, err := client.GetFile(id, item_id, vault_id)
+	file, err := client.GetFile(ctx, id, item_id, vault_id)
 	if err != nil {
 		plugin.Logger(ctx).Error("onepassword_item_file.getItemFile", "api_error", err)
 		return nil, err
@@ -165,13 +165,13 @@ func getItemFile(ctx context.Context, d *plugin.QueryData, _ *plugin.HydrateData
 func getFileContent(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (interface{}, error) {
 	file := h.Item.(ItemFile).File
 
-	client, err := getClient(ctx, d)
+	client, err := getBackend(ctx, d)
 	if err != nil {
 		plugin.Logger(ctx).Error("onepassword_item_file.getFileContent", "connection_error", err)
 		return nil, err
 	}
 
-	content, err := client.GetFileContent(&file)
+	content, err := client.GetFileContent(ctx, &file)
 	if err != nil {
 		plugin.Logger(ctx).Error("onepassword_item_file.getFileContent", "api_error", err)
 		return nil, err

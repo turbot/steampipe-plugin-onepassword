@@ -9,4 +9,10 @@ connection "onepassword" {
   # The host URL set to default http://localhost:8080. Optional.
   # This can also be set via the `OP_CONNECT_HOST` environment variable.
   # url = "http://localhost:8080"
+
+  # A service account token, used instead of a Connect server. Optional.
+  # Takes precedence over `token` when both are set.
+  # See https://developer.1password.com/docs/service-accounts/get-started/
+  # This can also be set via the `OP_SERVICE_ACCOUNT_TOKEN` environment variable.
+  # service_account_token = "ops_eyJzaWduSW5BZGRyZXNzIjoibXkuMXBhc3N3b3JkLmNvbSIsInVzZXJBdXRoIjp7Im1ldGhvZCI6IlNSUGctNDA5NiIsImFsZyI6IlBCRVMyZy1IUzI1NiIsIml0ZXJhdGlvbnMiOjY1MDAwMH19"
 }
