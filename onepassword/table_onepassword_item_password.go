@@ -4,9 +4,9 @@ import (
 	"context"
 
 	"github.com/1Password/connect-sdk-go/onepassword"
-	"github.com/turbot/steampipe-plugin-sdk/v5/grpc/proto"
-	"github.com/turbot/steampipe-plugin-sdk/v5/plugin"
-	"github.com/turbot/steampipe-plugin-sdk/v5/plugin/transform"
+	"github.com/turbot/steampipe-plugin-sdk/v6/grpc/proto"
+	"github.com/turbot/steampipe-plugin-sdk/v6/plugin"
+	"github.com/turbot/steampipe-plugin-sdk/v6/plugin/transform"
 )
 
 //// TABLE DEFINITION
@@ -171,8 +171,8 @@ func listItemPasswords(ctx context.Context, d *plugin.QueryData, h *plugin.Hydra
 func getItemPassword(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (interface{}, error) {
 	var id, vault_id string
 	if h.Item != nil {
-		id = h.Item.(ItemPassword).Item.ID
-		vault_id = h.Item.(ItemPassword).Item.Vault.ID
+		id = h.Item.(ItemPassword).ID
+		vault_id = h.Item.(ItemPassword).Vault.ID
 	} else {
 		id = d.EqualsQualString("id")
 		vault_id = d.EqualsQualString("vault_id")

@@ -7,7 +7,7 @@ import (
 	"strings"
 
 	"github.com/1Password/connect-sdk-go/connect"
-	"github.com/turbot/steampipe-plugin-sdk/v5/plugin"
+	"github.com/turbot/steampipe-plugin-sdk/v6/plugin"
 )
 
 func getClient(ctx context.Context, d *plugin.QueryData) (connect.Client, error) {
@@ -31,7 +31,7 @@ func getClient(ctx context.Context, d *plugin.QueryData) (connect.Client, error)
 		return client, nil
 	}
 
-	return nil, errors.New("'token' must be set in the connection configuration. Edit your connection configuration file and then restart Steampipe.")
+	return nil, errors.New("'token' must be set in the connection configuration. Edit your connection configuration file and then restart Steampipe")
 }
 
 func isNotFoundError(err error) bool {

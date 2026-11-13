@@ -4,9 +4,9 @@ import (
 	"context"
 
 	"github.com/1Password/connect-sdk-go/onepassword"
-	"github.com/turbot/steampipe-plugin-sdk/v5/grpc/proto"
-	"github.com/turbot/steampipe-plugin-sdk/v5/plugin"
-	"github.com/turbot/steampipe-plugin-sdk/v5/plugin/transform"
+	"github.com/turbot/steampipe-plugin-sdk/v6/grpc/proto"
+	"github.com/turbot/steampipe-plugin-sdk/v6/plugin"
+	"github.com/turbot/steampipe-plugin-sdk/v6/plugin/transform"
 )
 
 //// FUNCTION DEFINITION
@@ -171,8 +171,8 @@ func listItemSecureNotes(ctx context.Context, d *plugin.QueryData, h *plugin.Hyd
 func getItemSecureNote(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (interface{}, error) {
 	var id, vault_id string
 	if h.Item != nil {
-		id = h.Item.(ItemSecureNote).Item.ID
-		vault_id = h.Item.(ItemSecureNote).Item.Vault.ID
+		id = h.Item.(ItemSecureNote).ID
+		vault_id = h.Item.(ItemSecureNote).Vault.ID
 	} else {
 		id = d.EqualsQualString("id")
 		vault_id = d.EqualsQualString("vault_id")

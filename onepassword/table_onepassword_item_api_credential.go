@@ -4,9 +4,9 @@ import (
 	"context"
 
 	"github.com/1Password/connect-sdk-go/onepassword"
-	"github.com/turbot/steampipe-plugin-sdk/v5/grpc/proto"
-	"github.com/turbot/steampipe-plugin-sdk/v5/plugin"
-	"github.com/turbot/steampipe-plugin-sdk/v5/plugin/transform"
+	"github.com/turbot/steampipe-plugin-sdk/v6/grpc/proto"
+	"github.com/turbot/steampipe-plugin-sdk/v6/plugin"
+	"github.com/turbot/steampipe-plugin-sdk/v6/plugin/transform"
 )
 
 //// TABLE DEFINITION
@@ -178,8 +178,8 @@ func listItemAPICredentials(ctx context.Context, d *plugin.QueryData, h *plugin.
 func getItemAPICredential(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (interface{}, error) {
 	var id, vault_id string
 	if h.Item != nil {
-		id = h.Item.(ItemAPICrdential).Item.ID
-		vault_id = h.Item.(ItemAPICrdential).Item.Vault.ID
+		id = h.Item.(ItemAPICrdential).ID
+		vault_id = h.Item.(ItemAPICrdential).Vault.ID
 	} else {
 		id = d.EqualsQualString("id")
 		vault_id = d.EqualsQualString("vault_id")
@@ -206,9 +206,10 @@ func getItemAPICredential(ctx context.Context, d *plugin.QueryData, h *plugin.Hy
 	var username, credential string
 	if item.Category == "API_CREDENTIAL" {
 		for _, field := range item.Fields {
-			if field.ID == "username" {
+			switch field.ID {
+			case "username":
 				username = field.Value
-			} else if field.ID == "credential" {
+			case "credential":
 				credential = field.Value
 			}
 		}
