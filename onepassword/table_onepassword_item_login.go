@@ -4,9 +4,9 @@ import (
 	"context"
 
 	"github.com/1Password/connect-sdk-go/onepassword"
-	"github.com/turbot/steampipe-plugin-sdk/v5/grpc/proto"
-	"github.com/turbot/steampipe-plugin-sdk/v5/plugin"
-	"github.com/turbot/steampipe-plugin-sdk/v5/plugin/transform"
+	"github.com/turbot/steampipe-plugin-sdk/v6/grpc/proto"
+	"github.com/turbot/steampipe-plugin-sdk/v6/plugin"
+	"github.com/turbot/steampipe-plugin-sdk/v6/plugin/transform"
 )
 
 //// FUNCTION DEFINITION
@@ -178,8 +178,8 @@ func listItemLogins(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateD
 func getItemLogin(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (interface{}, error) {
 	var id, vault_id string
 	if h.Item != nil {
-		id = h.Item.(ItemLogin).Item.ID
-		vault_id = h.Item.(ItemLogin).Item.Vault.ID
+		id = h.Item.(ItemLogin).ID
+		vault_id = h.Item.(ItemLogin).Vault.ID
 	} else {
 		id = d.EqualsQualString("id")
 		vault_id = d.EqualsQualString("vault_id")
@@ -208,7 +208,7 @@ func getItemLogin(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateDat
 		for _, field := range item.Fields {
 			if field.ID == "username" && field.Purpose == "USERNAME" {
 				username = field.Value
-			}else if field.ID == "password" && field.Purpose == "PASSWORD" {
+			} else if field.ID == "password" && field.Purpose == "PASSWORD" {
 				password = field.Value
 			}
 		}

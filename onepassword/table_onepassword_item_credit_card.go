@@ -4,9 +4,9 @@ import (
 	"context"
 
 	"github.com/1Password/connect-sdk-go/onepassword"
-	"github.com/turbot/steampipe-plugin-sdk/v5/grpc/proto"
-	"github.com/turbot/steampipe-plugin-sdk/v5/plugin"
-	"github.com/turbot/steampipe-plugin-sdk/v5/plugin/transform"
+	"github.com/turbot/steampipe-plugin-sdk/v6/grpc/proto"
+	"github.com/turbot/steampipe-plugin-sdk/v6/plugin"
+	"github.com/turbot/steampipe-plugin-sdk/v6/plugin/transform"
 )
 
 //// TABLE DEFINITION
@@ -206,8 +206,8 @@ func listItemCreditCards(ctx context.Context, d *plugin.QueryData, h *plugin.Hyd
 func getItemCreditCard(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (interface{}, error) {
 	var id, vault_id string
 	if h.Item != nil {
-		id = h.Item.(ItemCreditCard).Item.ID
-		vault_id = h.Item.(ItemCreditCard).Item.Vault.ID
+		id = h.Item.(ItemCreditCard).ID
+		vault_id = h.Item.(ItemCreditCard).Vault.ID
 	} else {
 		id = d.EqualsQualString("id")
 		vault_id = d.EqualsQualString("vault_id")
@@ -234,17 +234,18 @@ func getItemCreditCard(ctx context.Context, d *plugin.QueryData, h *plugin.Hydra
 	var cardholder, cctype, ccnum, cvv, expiry, valid_from string
 	if item.Category == "CREDIT_CARD" {
 		for _, field := range item.Fields {
-			if field.ID == "cardholder" {
+			switch field.ID {
+			case "cardholder":
 				cardholder = field.Value
-			} else if field.ID == "type" {
+			case "type":
 				cctype = field.Value
-			} else if field.ID == "ccnum" {
+			case "ccnum":
 				ccnum = field.Value
-			} else if field.ID == "cvv" {
+			case "cvv":
 				cvv = field.Value
-			} else if field.ID == "expiry" {
+			case "expiry":
 				expiry = field.Value
-			} else if field.ID == "validFrom" {
+			case "validFrom":
 				valid_from = field.Value
 			}
 		}

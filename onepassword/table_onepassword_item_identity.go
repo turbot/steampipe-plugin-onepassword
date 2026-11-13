@@ -4,9 +4,9 @@ import (
 	"context"
 
 	"github.com/1Password/connect-sdk-go/onepassword"
-	"github.com/turbot/steampipe-plugin-sdk/v5/grpc/proto"
-	"github.com/turbot/steampipe-plugin-sdk/v5/plugin"
-	"github.com/turbot/steampipe-plugin-sdk/v5/plugin/transform"
+	"github.com/turbot/steampipe-plugin-sdk/v6/grpc/proto"
+	"github.com/turbot/steampipe-plugin-sdk/v6/plugin"
+	"github.com/turbot/steampipe-plugin-sdk/v6/plugin/transform"
 )
 
 //// TABLE DEFINITION
@@ -228,8 +228,8 @@ func listItemIdentities(ctx context.Context, d *plugin.QueryData, h *plugin.Hydr
 func getItemIdentity(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (interface{}, error) {
 	var id, vault_id string
 	if h.Item != nil {
-		id = h.Item.(ItemIdentity).Item.ID
-		vault_id = h.Item.(ItemIdentity).Item.Vault.ID
+		id = h.Item.(ItemIdentity).ID
+		vault_id = h.Item.(ItemIdentity).Vault.ID
 	} else {
 		id = d.EqualsQualString("id")
 		vault_id = d.EqualsQualString("vault_id")
@@ -256,23 +256,24 @@ func getItemIdentity(ctx context.Context, d *plugin.QueryData, h *plugin.Hydrate
 	var firstname, initial, lastname, birthdate, gender, occupation, company, department, jobtitle string
 	if item.Category == "IDENTITY" {
 		for _, field := range item.Fields {
-			if field.ID == "firstname" {
+			switch field.ID {
+			case "firstname":
 				firstname = field.Value
-			} else if field.ID == "initial" {
+			case "initial":
 				initial = field.Value
-			} else if field.ID == "lastname" {
+			case "lastname":
 				lastname = field.Value
-			} else if field.ID == "gender" {
+			case "gender":
 				gender = field.Value
-			} else if field.ID == "birthdate" {
+			case "birthdate":
 				birthdate = field.Value
-			} else if field.ID == "occupation" {
+			case "occupation":
 				occupation = field.Value
-			} else if field.ID == "company" {
+			case "company":
 				company = field.Value
-			} else if field.ID == "department" {
+			case "department":
 				department = field.Value
-			} else if field.ID == "jobtitle" {
+			case "jobtitle":
 				jobtitle = field.Value
 			}
 		}
